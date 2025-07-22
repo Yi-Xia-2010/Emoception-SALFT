@@ -1,0 +1,151 @@
+{
+    "full_finetuning": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.5061,
+            "cumulative_cost_gflops": 14803504.8
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.5573,
+            "cumulative_cost_gflops": 29607009.6
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.5738,
+            "cumulative_cost_gflops": 44410514.4
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.5972,
+            "cumulative_cost_gflops": 59214019.2
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.5969,
+            "cumulative_cost_gflops": 74017524.0
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.6163,
+            "cumulative_cost_gflops": 88821028.8
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.6291,
+            "cumulative_cost_gflops": 103624533.6
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.6296,
+            "cumulative_cost_gflops": 118428038.4
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.6019,
+            "cumulative_cost_gflops": 133231543.2
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.6103,
+            "cumulative_cost_gflops": 148035048.0
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.6446,
+            "cumulative_cost_gflops": 162838552.8
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.6329,
+            "cumulative_cost_gflops": 177642057.6
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.6689,
+            "cumulative_cost_gflops": 192445562.4
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.6802,
+            "cumulative_cost_gflops": 207249067.2
+        }
+    ],
+    "finetune_layer0": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.4949,
+            "cumulative_cost_gflops": 10298893.8
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.5542,
+            "cumulative_cost_gflops": 20584981.8
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.6076,
+            "cumulative_cost_gflops": 30871069.8
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.6437,
+            "cumulative_cost_gflops": 41157157.8
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.6522,
+            "cumulative_cost_gflops": 51443245.8
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.6479,
+            "cumulative_cost_gflops": 61729333.8
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.662,
+            "cumulative_cost_gflops": 72015421.8
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.679,
+            "cumulative_cost_gflops": 82301509.8
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.6908,
+            "cumulative_cost_gflops": 92587597.8
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.685,
+            "cumulative_cost_gflops": 102873685.8
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.6873,
+            "cumulative_cost_gflops": 113159773.8
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7089,
+            "cumulative_cost_gflops": 123445861.8
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7204,
+            "cumulative_cost_gflops": 133731949.8
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.7111,
+            "cumulative_cost_gflops": 144018037.8
+        }
+    ],
+    "steps_per_epoch": 2312,
+    "full_finetuning_cost_per_epoch_gflops": 14803504.8,
+    "full_finetuning_total_cost_gflops": 207249067.2,
+    "finetune_layer0_cost_per_epoch_gflops": 10286088.0,
+    "finetune_layer0_total_cost_gflops": 144018037.8
+}

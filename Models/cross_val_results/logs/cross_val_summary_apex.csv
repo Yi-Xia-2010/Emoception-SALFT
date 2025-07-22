@@ -1,0 +1,15 @@
+Game,Layer,Accuracy,F1 Weighted,F1 Macro
+apex,embeddings,0.558,0.507,0.44
+apex,layer.0,0.7299,0.7297,0.7118
+apex,layer.1,0.6625,0.6579,0.6383
+apex,layer.2,0.5976,0.5606,0.507
+apex,layer.3,0.5902,0.5609,0.5084
+apex,layer.4,0.5912,0.5628,0.5155
+apex,layer.5,0.5743,0.5402,0.4892
+apex,layer.6,0.5426,0.483,0.42
+apex,layer.7,0.5545,0.493,0.4195
+apex,layer.8,0.5387,0.4776,0.4097
+apex,layer.9,0.5649,0.5227,0.4663
+apex,layer.10,0.5515,0.5,0.4399
+apex,layer.11,0.5377,0.4796,0.4022
+apex,classifier,0.505,0.4027,0.3093

@@ -1,0 +1,67 @@
+{
+  "embeddings": {
+    "param_l1_diff": 3368.883056640625,
+    "param_l2_diff": 2.446737289428711,
+    "param_cosine_similarity": 0.9999421834945679
+  },
+  "vivit.encoder.layer.0": {
+    "param_l1_diff": 7515.6201171875,
+    "param_l2_diff": 3.6642022132873535,
+    "param_cosine_similarity": 0.9998418688774109
+  },
+  "vivit.encoder.layer.1": {
+    "param_l1_diff": 7000.7763671875,
+    "param_l2_diff": 3.424351215362549,
+    "param_cosine_similarity": 0.9998425245285034
+  },
+  "vivit.encoder.layer.2": {
+    "param_l1_diff": 6389.54931640625,
+    "param_l2_diff": 3.152153253555298,
+    "param_cosine_similarity": 0.9998617172241211
+  },
+  "vivit.encoder.layer.3": {
+    "param_l1_diff": 5686.0625,
+    "param_l2_diff": 2.827268362045288,
+    "param_cosine_similarity": 0.999891459941864
+  },
+  "vivit.encoder.layer.4": {
+    "param_l1_diff": 5441.2939453125,
+    "param_l2_diff": 2.6942026615142822,
+    "param_cosine_similarity": 0.9999071359634399
+  },
+  "vivit.encoder.layer.5": {
+    "param_l1_diff": 5356.431640625,
+    "param_l2_diff": 2.639108419418335,
+    "param_cosine_similarity": 0.9999164938926697
+  },
+  "vivit.encoder.layer.6": {
+    "param_l1_diff": 5333.22998046875,
+    "param_l2_diff": 2.6222922801971436,
+    "param_cosine_similarity": 0.9999222159385681
+  },
+  "vivit.encoder.layer.7": {
+    "param_l1_diff": 5500.1669921875,
+    "param_l2_diff": 2.7059292793273926,
+    "param_cosine_similarity": 0.9999212026596069
+  },
+  "vivit.encoder.layer.8": {
+    "param_l1_diff": 5566.7509765625,
+    "param_l2_diff": 2.7856404781341553,
+    "param_cosine_similarity": 0.9999234676361084
+  },
+  "vivit.encoder.layer.9": {
+    "param_l1_diff": 5467.09912109375,
+    "param_l2_diff": 2.8922653198242188,
+    "param_cosine_similarity": 0.9999290704727173
+  },
+  "vivit.encoder.layer.10": {
+    "param_l1_diff": 5094.482421875,
+    "param_l2_diff": 2.843601942062378,
+    "param_cosine_similarity": 0.9999509453773499
+  },
+  "vivit.encoder.layer.11": {
+    "param_l1_diff": 4964.3984375,
+    "param_l2_diff": 3.2066822052001953,
+    "param_cosine_similarity": 0.999932050704956
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "file1": ".\\tiny\\1epoch\\comparison_results_raw.json",
+  "file2": ".\\tiny\\2epoch\\comparison_results_raw.json",
+  "shared_layers_count": 13,
+  "shared_layers": [
+    "embeddings",
+    "vivit.encoder.layer.0",
+    "vivit.encoder.layer.1",
+    "vivit.encoder.layer.2",
+    "vivit.encoder.layer.3",
+    "vivit.encoder.layer.4",
+    "vivit.encoder.layer.5",
+    "vivit.encoder.layer.6",
+    "vivit.encoder.layer.7",
+    "vivit.encoder.layer.8",
+    "vivit.encoder.layer.9",
+    "vivit.encoder.layer.10",
+    "vivit.encoder.layer.11"
+  ],
+  "param_l2_diff_file1": {
+    "embeddings": 3.473717451095581,
+    "vivit.encoder.layer.0": 5.063469886779785,
+    "vivit.encoder.layer.1": 4.479480266571045,
+    "vivit.encoder.layer.2": 4.0172014236450195,
+    "vivit.encoder.layer.3": 3.7445149421691895,
+    "vivit.encoder.layer.4": 3.4845407009124756,
+    "vivit.encoder.layer.5": 3.1924452781677246,
+    "vivit.encoder.layer.6": 3.0592899322509766,
+    "vivit.encoder.layer.7": 2.933872699737549,
+    "vivit.encoder.layer.8": 2.8819022178649902,
+    "vivit.encoder.layer.9": 2.9499170780181885,
+    "vivit.encoder.layer.10": 2.997161865234375,
+    "vivit.encoder.layer.11": 3.054849863052368
+  },
+  "param_l2_diff_file2": {
+    "embeddings": 6.822317123413086,
+    "vivit.encoder.layer.0": 10.426506996154785,
+    "vivit.encoder.layer.1": 9.572239875793457,
+    "vivit.encoder.layer.2": 8.870019912719727,
+    "vivit.encoder.layer.3": 8.277767181396484,
+    "vivit.encoder.layer.4": 7.683956146240234,
+    "vivit.encoder.layer.5": 6.76478385925293,
+    "vivit.encoder.layer.6": 6.115711212158203,
+    "vivit.encoder.layer.7": 5.575653553009033,
+    "vivit.encoder.layer.8": 5.060731887817383,
+    "vivit.encoder.layer.9": 4.889435291290283,
+    "vivit.encoder.layer.10": 4.727809906005859,
+    "vivit.encoder.layer.11": 4.523561000823975
+  },
+  "spearman": {
+    "correlation": 0.895604,
+    "p_value": 3.5e-05
+  }
+}

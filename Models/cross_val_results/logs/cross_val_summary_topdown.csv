@@ -1,0 +1,15 @@
+Game,Layer,Accuracy,F1 Weighted,F1 Macro
+topdown,embeddings,0.5791,0.534,0.4467
+topdown,layer.0,0.7207,0.7146,0.6761
+topdown,layer.1,0.6908,0.6842,0.6529
+topdown,layer.2,0.6369,0.6259,0.5736
+topdown,layer.3,0.6237,0.6117,0.5498
+topdown,layer.4,0.6384,0.6135,0.5486
+topdown,layer.5,0.632,0.6187,0.5616
+topdown,layer.6,0.6345,0.6147,0.5555
+topdown,layer.7,0.6507,0.6369,0.5854
+topdown,layer.8,0.6369,0.6275,0.5767
+topdown,layer.9,0.6492,0.6354,0.5891
+topdown,layer.10,0.657,0.6496,0.6043
+topdown,layer.11,0.6198,0.6046,0.5491
+topdown,classifier,0.5693,0.5026,0.3965

@@ -1,0 +1,436 @@
+{
+    "vivit.encoder.layer.0": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.0_epoch_3_test",
+                "accuracy": 0.6935,
+                "f1_weighted": 0.6824,
+                "precision_weighted": 0.6954,
+                "recall_weighted": 0.6935,
+                "f1_micro": 0.6935,
+                "f1_macro": 0.6529,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.719,
+                        "recall": 0.5081,
+                        "f1_score": 0.5954
+                    },
+                    "same": {
+                        "precision": 0.6778,
+                        "recall": 0.531,
+                        "f1_score": 0.5955
+                    },
+                    "up": {
+                        "precision": 0.6896,
+                        "recall": 0.8663,
+                        "f1_score": 0.7679
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.1": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.1_epoch_3_test",
+                "accuracy": 0.5973,
+                "f1_weighted": 0.5628,
+                "precision_weighted": 0.5937,
+                "recall_weighted": 0.5973,
+                "f1_micro": 0.5973,
+                "f1_macro": 0.5061,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.6316,
+                        "recall": 0.3864,
+                        "f1_score": 0.4795
+                    },
+                    "same": {
+                        "precision": 0.5344,
+                        "recall": 0.2405,
+                        "f1_score": 0.3317
+                    },
+                    "up": {
+                        "precision": 0.5974,
+                        "recall": 0.8663,
+                        "f1_score": 0.7071
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.2": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.2_epoch_3_test",
+                "accuracy": 0.5694,
+                "f1_weighted": 0.519,
+                "precision_weighted": 0.5588,
+                "recall_weighted": 0.5694,
+                "f1_micro": 0.5694,
+                "f1_macro": 0.4474,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5231,
+                        "recall": 0.3649,
+                        "f1_score": 0.4299
+                    },
+                    "same": {
+                        "precision": 0.549,
+                        "recall": 0.1333,
+                        "f1_score": 0.2146
+                    },
+                    "up": {
+                        "precision": 0.583,
+                        "recall": 0.8683,
+                        "f1_score": 0.6976
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.3": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.3_epoch_3_test",
+                "accuracy": 0.5441,
+                "f1_weighted": 0.5009,
+                "precision_weighted": 0.5123,
+                "recall_weighted": 0.5441,
+                "f1_micro": 0.5441,
+                "f1_macro": 0.4295,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.4726,
+                        "recall": 0.3703,
+                        "f1_score": 0.4152
+                    },
+                    "same": {
+                        "precision": 0.406,
+                        "recall": 0.1286,
+                        "f1_score": 0.1953
+                    },
+                    "up": {
+                        "precision": 0.5795,
+                        "recall": 0.8171,
+                        "f1_score": 0.6781
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.4": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.4_epoch_3_test",
+                "accuracy": 0.5557,
+                "f1_weighted": 0.4849,
+                "precision_weighted": 0.5465,
+                "recall_weighted": 0.5557,
+                "f1_micro": 0.5557,
+                "f1_macro": 0.4023,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5405,
+                        "recall": 0.2862,
+                        "f1_score": 0.3743
+                    },
+                    "same": {
+                        "precision": 0.5231,
+                        "recall": 0.081,
+                        "f1_score": 0.1402
+                    },
+                    "up": {
+                        "precision": 0.5598,
+                        "recall": 0.9075,
+                        "f1_score": 0.6925
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.5": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.5_epoch_3_test",
+                "accuracy": 0.5557,
+                "f1_weighted": 0.5003,
+                "precision_weighted": 0.5359,
+                "recall_weighted": 0.5557,
+                "f1_micro": 0.5557,
+                "f1_macro": 0.425,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5123,
+                        "recall": 0.3345,
+                        "f1_score": 0.4048
+                    },
+                    "same": {
+                        "precision": 0.4845,
+                        "recall": 0.1119,
+                        "f1_score": 0.1818
+                    },
+                    "up": {
+                        "precision": 0.5708,
+                        "recall": 0.8673,
+                        "f1_score": 0.6885
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.6": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.6_epoch_3_test",
+                "accuracy": 0.5562,
+                "f1_weighted": 0.4879,
+                "precision_weighted": 0.5265,
+                "recall_weighted": 0.5562,
+                "f1_micro": 0.5562,
+                "f1_macro": 0.4026,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5301,
+                        "recall": 0.347,
+                        "f1_score": 0.4195
+                    },
+                    "same": {
+                        "precision": 0.4259,
+                        "recall": 0.0548,
+                        "f1_score": 0.097
+                    },
+                    "up": {
+                        "precision": 0.5669,
+                        "recall": 0.8854,
+                        "f1_score": 0.6913
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.7": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.7_epoch_3_test",
+                "accuracy": 0.5562,
+                "f1_weighted": 0.5008,
+                "precision_weighted": 0.5365,
+                "recall_weighted": 0.5562,
+                "f1_micro": 0.5562,
+                "f1_macro": 0.4268,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5399,
+                        "recall": 0.3148,
+                        "f1_score": 0.3977
+                    },
+                    "same": {
+                        "precision": 0.4602,
+                        "recall": 0.1238,
+                        "f1_score": 0.1951
+                    },
+                    "up": {
+                        "precision": 0.5668,
+                        "recall": 0.8744,
+                        "f1_score": 0.6877
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.8": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.8_epoch_3_test",
+                "accuracy": 0.5684,
+                "f1_weighted": 0.5207,
+                "precision_weighted": 0.5599,
+                "recall_weighted": 0.5684,
+                "f1_micro": 0.5684,
+                "f1_macro": 0.4512,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5375,
+                        "recall": 0.3971,
+                        "f1_score": 0.4568
+                    },
+                    "same": {
+                        "precision": 0.5455,
+                        "recall": 0.1286,
+                        "f1_score": 0.2081
+                    },
+                    "up": {
+                        "precision": 0.5787,
+                        "recall": 0.8503,
+                        "f1_score": 0.6886
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.9": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.9_epoch_3_test",
+                "accuracy": 0.5836,
+                "f1_weighted": 0.529,
+                "precision_weighted": 0.586,
+                "recall_weighted": 0.5836,
+                "f1_micro": 0.5836,
+                "f1_macro": 0.4587,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.6379,
+                        "recall": 0.3309,
+                        "f1_score": 0.4358
+                    },
+                    "same": {
+                        "precision": 0.5385,
+                        "recall": 0.15,
+                        "f1_score": 0.2346
+                    },
+                    "up": {
+                        "precision": 0.5769,
+                        "recall": 0.9085,
+                        "f1_score": 0.7057
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.10": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.10_epoch_3_test",
+                "accuracy": 0.5679,
+                "f1_weighted": 0.5176,
+                "precision_weighted": 0.5557,
+                "recall_weighted": 0.5679,
+                "f1_micro": 0.5679,
+                "f1_macro": 0.4486,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5701,
+                        "recall": 0.3202,
+                        "f1_score": 0.4101
+                    },
+                    "same": {
+                        "precision": 0.4926,
+                        "recall": 0.1595,
+                        "f1_score": 0.241
+                    },
+                    "up": {
+                        "precision": 0.5741,
+                        "recall": 0.8794,
+                        "f1_score": 0.6947
+                    }
+                }
+            }
+        }
+    },
+    "vivit.encoder.layer.11": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.encoder.layer.11_epoch_3_test",
+                "accuracy": 0.54,
+                "f1_weighted": 0.4831,
+                "precision_weighted": 0.511,
+                "recall_weighted": 0.54,
+                "f1_micro": 0.54,
+                "f1_macro": 0.4065,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.4759,
+                        "recall": 0.3005,
+                        "f1_score": 0.3684
+                    },
+                    "same": {
+                        "precision": 0.4369,
+                        "recall": 0.1071,
+                        "f1_score": 0.1721
+                    },
+                    "up": {
+                        "precision": 0.5619,
+                        "recall": 0.8573,
+                        "f1_score": 0.6789
+                    }
+                }
+            }
+        }
+    },
+    "vivit.embeddings": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.embeddings_epoch_3_test",
+                "accuracy": 0.5496,
+                "f1_weighted": 0.491,
+                "precision_weighted": 0.5392,
+                "recall_weighted": 0.5496,
+                "f1_micro": 0.5496,
+                "f1_macro": 0.4261,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.5,
+                        "recall": 0.195,
+                        "f1_score": 0.2806
+                    },
+                    "same": {
+                        "precision": 0.5509,
+                        "recall": 0.219,
+                        "f1_score": 0.3135
+                    },
+                    "up": {
+                        "precision": 0.5563,
+                        "recall": 0.8884,
+                        "f1_score": 0.6842
+                    }
+                }
+            }
+        }
+    },
+    "vivit.classifier": {
+        "epoch_3": {
+            "test": {
+                "epoch": 3,
+                "case_name": "vivit.classifier_epoch_3_test",
+                "accuracy": 0.5106,
+                "f1_weighted": 0.3794,
+                "precision_weighted": 0.4634,
+                "recall_weighted": 0.5106,
+                "f1_micro": 0.5106,
+                "f1_macro": 0.2724,
+                "class_metrics": {
+                    "down": {
+                        "precision": 0.4167,
+                        "recall": 0.0805,
+                        "f1_score": 0.1349
+                    },
+                    "same": {
+                        "precision": 0.4,
+                        "recall": 0.0048,
+                        "f1_score": 0.0094
+                    },
+                    "up": {
+                        "precision": 0.5164,
+                        "recall": 0.9658,
+                        "f1_score": 0.673
+                    }
+                }
+            }
+        }
+    }
+}

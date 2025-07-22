@@ -1,0 +1,151 @@
+{
+    "full_finetuning": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.3494,
+            "cumulative_cost_gflops": 14745878.7
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.4541,
+            "cumulative_cost_gflops": 29491757.4
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.5788,
+            "cumulative_cost_gflops": 44237636.1
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.6459,
+            "cumulative_cost_gflops": 58983514.8
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.6843,
+            "cumulative_cost_gflops": 73729393.5
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.6931,
+            "cumulative_cost_gflops": 88475272.2
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.694,
+            "cumulative_cost_gflops": 103221150.9
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.7275,
+            "cumulative_cost_gflops": 117967029.6
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.7355,
+            "cumulative_cost_gflops": 132712908.3
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.7308,
+            "cumulative_cost_gflops": 147458787.0
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.7282,
+            "cumulative_cost_gflops": 162204665.7
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7183,
+            "cumulative_cost_gflops": 176950544.4
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7449,
+            "cumulative_cost_gflops": 191696423.1
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.7521,
+            "cumulative_cost_gflops": 206442301.8
+        }
+    ],
+    "finetune_layer0": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.4423,
+            "cumulative_cost_gflops": 10258852.8
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.5727,
+            "cumulative_cost_gflops": 20504899.8
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.695,
+            "cumulative_cost_gflops": 30750946.8
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.7534,
+            "cumulative_cost_gflops": 40996993.8
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.758,
+            "cumulative_cost_gflops": 51243040.8
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.7624,
+            "cumulative_cost_gflops": 61489087.8
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.7662,
+            "cumulative_cost_gflops": 71735134.8
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.7828,
+            "cumulative_cost_gflops": 81981181.8
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.7803,
+            "cumulative_cost_gflops": 92227228.8
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.7932,
+            "cumulative_cost_gflops": 102473275.8
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.7802,
+            "cumulative_cost_gflops": 112719322.8
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7874,
+            "cumulative_cost_gflops": 122965369.8
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.788,
+            "cumulative_cost_gflops": 133211416.8
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.7935,
+            "cumulative_cost_gflops": 143457463.8
+        }
+    ],
+    "steps_per_epoch": 2303,
+    "full_finetuning_cost_per_epoch_gflops": 14745878.7,
+    "full_finetuning_total_cost_gflops": 206442301.8,
+    "finetune_layer0_cost_per_epoch_gflops": 10246047.0,
+    "finetune_layer0_total_cost_gflops": 143457463.8
+}

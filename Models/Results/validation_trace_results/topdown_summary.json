@@ -1,0 +1,118 @@
+{
+    "full_finetuning": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.5247
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.5779
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.6469
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.6809
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.6709
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.6394
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.6637
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.6704
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.6867
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.6971
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.7183
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7226
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7336
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.6815
+        }
+    ],
+    "finetune_layer0": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.556
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.6548
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.7223
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.7565
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.7664
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.7586
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.7643
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.7559
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.7585
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.7766
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.7773
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7719
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7765
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.7651
+        }
+    ]
+}

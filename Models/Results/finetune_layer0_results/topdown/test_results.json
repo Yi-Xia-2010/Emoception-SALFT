@@ -1,0 +1,29 @@
+[
+    {
+        "epoch": 11,
+        "case_name": "finetune_layer0_topdown_11_validation",
+        "accuracy": 0.7849,
+        "f1_weighted": 0.7832,
+        "precision_weighted": 0.7833,
+        "recall_weighted": 0.7849,
+        "f1_micro": 0.7849,
+        "f1_macro": 0.7605666666666666,
+        "class_metrics": {
+            "down": {
+                "precision": 0.7476,
+                "recall": 0.7525,
+                "f1_score": 0.75
+            },
+            "same": {
+                "precision": 0.7485,
+                "recall": 0.6497,
+                "f1_score": 0.6957
+            },
+            "up": {
+                "precision": 0.8175,
+                "recall": 0.8554,
+                "f1_score": 0.836
+            }
+        }
+    }
+]

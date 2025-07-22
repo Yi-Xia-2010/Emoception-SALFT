@@ -1,0 +1,29 @@
+[
+    {
+        "epoch": 10,
+        "case_name": "full_finetuning_gallery_10_validation",
+        "accuracy": 0.7127,
+        "f1_weighted": 0.7018,
+        "precision_weighted": 0.7062,
+        "recall_weighted": 0.7127,
+        "f1_micro": 0.7127,
+        "f1_macro": 0.6688999999999999,
+        "class_metrics": {
+            "down": {
+                "precision": 0.655,
+                "recall": 0.4334,
+                "f1_score": 0.5216
+            },
+            "same": {
+                "precision": 0.6875,
+                "recall": 0.7181,
+                "f1_score": 0.7025
+            },
+            "up": {
+                "precision": 0.7352,
+                "recall": 0.8365,
+                "f1_score": 0.7826
+            }
+        }
+    }
+]

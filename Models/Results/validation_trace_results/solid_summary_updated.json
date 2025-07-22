@@ -1,0 +1,146 @@
+{
+    "full_finetuning_results": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.4687744077728426,
+            "cumulative_cost_gflops": 14342496.0
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.5372604203073504,
+            "cumulative_cost_gflops": 28684992.0
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.6200482312884245,
+            "cumulative_cost_gflops": 43027488.0
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.6698114463107661,
+            "cumulative_cost_gflops": 57369984.0
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.6957960160071424,
+            "cumulative_cost_gflops": 71712480.0
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.6822776096652617,
+            "cumulative_cost_gflops": 86054976.0
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.7241913295370207,
+            "cumulative_cost_gflops": 100397472.0
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.7423198918483064,
+            "cumulative_cost_gflops": 114739968.0
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.736166473943448,
+            "cumulative_cost_gflops": 129082464.0
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.7452054688725087,
+            "cumulative_cost_gflops": 143424960.0
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.741039499260861,
+            "cumulative_cost_gflops": 157767456.0
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7489822178588087,
+            "cumulative_cost_gflops": 172109952.0
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7403748128443257,
+            "cumulative_cost_gflops": 186452448.0
+        },
+        {
+            "epoch": 14,
+            "f1_weighted": 0.7444923437527391,
+            "cumulative_cost_gflops": 200794944.0
+        }
+    ],
+    "finetune_layer0_results": [
+        {
+            "epoch": 1,
+            "f1_weighted": 0.5310360295985773,
+            "cumulative_cost_gflops": 9978565.8
+        },
+        {
+            "epoch": 2,
+            "f1_weighted": 0.6661149280707661,
+            "cumulative_cost_gflops": 19944325.8
+        },
+        {
+            "epoch": 3,
+            "f1_weighted": 0.7422889940492622,
+            "cumulative_cost_gflops": 29910085.8
+        },
+        {
+            "epoch": 4,
+            "f1_weighted": 0.7788287262362842,
+            "cumulative_cost_gflops": 39875845.8
+        },
+        {
+            "epoch": 5,
+            "f1_weighted": 0.7770265095068893,
+            "cumulative_cost_gflops": 49841605.8
+        },
+        {
+            "epoch": 6,
+            "f1_weighted": 0.7652799759726111,
+            "cumulative_cost_gflops": 59807365.8
+        },
+        {
+            "epoch": 7,
+            "f1_weighted": 0.7722942600232037,
+            "cumulative_cost_gflops": 69773125.8
+        },
+        {
+            "epoch": 8,
+            "f1_weighted": 0.7742609525065229,
+            "cumulative_cost_gflops": 79738885.8
+        },
+        {
+            "epoch": 9,
+            "f1_weighted": 0.782573836712425,
+            "cumulative_cost_gflops": 89704645.8
+        },
+        {
+            "epoch": 10,
+            "f1_weighted": 0.7910217812842361,
+            "cumulative_cost_gflops": 99670405.8
+        },
+        {
+            "epoch": 11,
+            "f1_weighted": 0.7834643453149039,
+            "cumulative_cost_gflops": 109636165.8
+        },
+        {
+            "epoch": 12,
+            "f1_weighted": 0.7846879613840034,
+            "cumulative_cost_gflops": 119601925.8
+        },
+        {
+            "epoch": 13,
+            "f1_weighted": 0.7836946276606608,
+            "cumulative_cost_gflops": 129567685.8
+        }
+    ],
+    "steps_per_epoch": 2240,
+    "full_finetuning_cost_per_epoch_gflops": 14342496.0,
+    "full_finetuning_total_cost_gflops": 200794944.0,
+    "finetune_layer0_cost_per_epoch_gflops": 9965760.0,
+    "finetune_layer0_total_cost_gflops": 129567685.8
+}
