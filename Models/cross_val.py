@@ -16,7 +16,6 @@ from transformers import VivitImageProcessor, VivitForVideoClassification, AdamW
 
 # Set a seed for reproducibility
 def set_seed(seed):
-    """Sets the seed for reproducibility."""
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     random.seed(seed)
@@ -24,18 +23,15 @@ def set_seed(seed):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-# --- Dataset Definition ---
 class MyCSVDataset(Dataset):
-    """Custom Dataset for loading video frames and game data."""
     def __init__(self, csv_file, csv_file_2, game_name, image_processor, label2id, root_dir="../Dataset/"):
         self.data = pd.read_csv(csv_file)
-        self.gf = pd.read_csv(csv_file_2) # Loaded but not used in this specific task
+        self.gf = pd.read_csv(csv_file_2) 
         self.game_name = game_name
         self.image_processor = image_processor
         self.label2id = label2id
         self.root_dir = root_dir
         
-        # Pre-process game feature data (not used in this model, but kept as per original)
         columns_to_drop = [col for col in self.gf.columns if "control" in col and 
                                  col != "[control]player_id" and 
                                  col != "[control]session_id"]
@@ -48,7 +44,7 @@ class MyCSVDataset(Dataset):
     def _get_file_info(self, file_path):
         file_path = os.path.normpath(file_path)
         file_paths = file_path.split(os.sep)
-        video_name = file_paths[-2] # Assumes video folder name is in the format player_id_game_name_session_id
+        video_name = file_paths[-2] 
         player_id, session_id = video_name.split(f'_{self.game_name}_')
         return player_id, session_id
 
@@ -107,7 +103,6 @@ def custom_collate_fn(batch):
     }
 
 
-# --- Evaluation and Logging ---
 def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
     """Evaluates the model and returns performance metrics."""
     model.eval()
@@ -182,18 +177,14 @@ def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
     return results
 
 def save_results_to_json(filepath, data):
-    """Saves evaluation results to a JSON file."""
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# --- Main Training and Evaluation Script ---
 def main(args):
-    """Main function to run the training and evaluation pipeline for single-layer fine-tuning."""
     set_seed(42)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # --- Configuration ---
     class_labels = ['down', 'same', 'up']
     label2id = {label: i for i, label in enumerate(class_labels)}
     id2label = {i: label for label, i in label2id.items()}
@@ -205,7 +196,6 @@ def main(args):
     log_dir = os.path.join(output_base_dir, "logs")
     os.makedirs(log_dir, exist_ok=True)
 
-    # --- Data Loading ---
     model_ckpt = "google/vivit-b-16x2-kinetics400"
     image_processor = VivitImageProcessor.from_pretrained(model_ckpt)
     
@@ -226,7 +216,7 @@ def main(args):
     val_dataloader = DataLoader(val_dataset, batch_size=args.batch_size, collate_fn=custom_collate_fn) # Use batch_size for val/test too
     test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, collate_fn=custom_collate_fn)
 
-    # --- Determine trainable sub-modules (excluding the classifier, which is always trained) ---
+    # Determine trainable sub-modules (excluding the classifier, which is always trained)
     # If specific layers are provided, use them. Otherwise, determine all possible layers.
     if args.finetune_layers:
         trainable_sub_modules_list = [layer.strip() for layer in args.finetune_layers.split(',')]
@@ -234,11 +224,11 @@ def main(args):
         if "classifier_only" not in trainable_sub_modules_list:
             trainable_sub_modules_list.append("classifier_only")
     else:
-        # FIX: Added ignore_mismatched_sizes=True here as well.
+
         temp_model_for_structure = VivitForVideoClassification.from_pretrained(
             model_ckpt, 
             num_labels=len(class_labels),
-            ignore_mismatched_sizes=True # Added this line
+            ignore_mismatched_sizes=True 
         )
         trainable_sub_modules_list = []
 
@@ -350,8 +340,6 @@ def main(args):
                 test_results = evaluate(model, test_dataloader, device, test_case_name, epoch + 1, label2id, id2label)
                 
                 # Store results in the main results dictionary
-                # MODIFICATION: This block is changed to conditionally save validation results
-                # or only save test results based on the new command-line argument.
                 if args.log_test_only:
                     all_experiment_results[layer_name_to_finetune][f"epoch_{epoch+1}"] = {
                         "test": test_results

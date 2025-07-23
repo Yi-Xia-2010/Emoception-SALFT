@@ -16,7 +16,6 @@ from transformers import VivitImageProcessor, VivitForVideoClassification, AdamW
 
 # Set a seed for reproducibility
 def set_seed(seed):
-    """Sets the seed for reproducibility."""
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     random.seed(seed)
@@ -27,9 +26,8 @@ def set_seed(seed):
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     torch.use_deterministic_algorithms(True)
 
-# --- Dataset Definition ---
+
 class MyCSVDataset(Dataset):
-    """Custom Dataset for loading video frames and game data."""
     def __init__(self, csv_file, csv_file_2, game_name, image_processor, label2id, root_dir="../Dataset/"):
         self.data = pd.read_csv(csv_file)
         self.gf = pd.read_csv(csv_file_2)
@@ -82,9 +80,7 @@ class MyCSVDataset(Dataset):
         
         return inputs
 
-# --- Evaluation and Logging ---
 def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
-    """Evaluates the model and returns performance metrics."""
     model.eval()
     all_labels = []
     all_preds = []
@@ -140,30 +136,23 @@ def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
     return results
 
 def save_results_to_json(filepath, data):
-    """Saves evaluation results to a JSON file."""
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# --- Main Training and Evaluation Script ---
+
 def main(args):
-    """Main function to run the training and evaluation pipeline."""
     set_seed(42)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # --- Configuration ---
     class_labels = ['down', 'same', 'up']
     label2id = {label: i for i, label in enumerate(class_labels)}
     id2label = {i: label for label, i in label2id.items()}
     
-    # <--- NEW/MODIFIED: Logic to automatically extract the prefix for case_name
-    # Get the final directory name from the path (e.g., "./dir/my_results" -> "my_results")
     base_dir_name = os.path.basename(args.output_dir)
-    # Remove the common suffix to get the desired prefix (e.g., "my_results" -> "my")
     case_prefix = base_dir_name.removesuffix('_results')
     print(f"Automatically extracted case prefix: '{case_prefix}'")
     
-    # Create a sub-directory for the specific game
     output_dir = os.path.join(args.output_dir, args.game_name)
     model_dir = os.path.join(output_dir, "checkpoints")
  
@@ -173,7 +162,6 @@ def main(args):
     
     model_ckpt_hub = "google/vivit-b-16x2-kinetics400"
 
-    # --- Data Loading ---
     image_processor = VivitImageProcessor.from_pretrained(model_ckpt_hub)
     
     csv_file = f'../Dataset/new_{args.game_name}.csv'
@@ -290,7 +278,6 @@ def main(args):
         val_results = evaluate(model, val_dataloader, device, val_case_name, epoch + 1, label2id, id2label)
         validation_logs.append(val_results)
         
-        # --- MODIFICATION: Choose save format ---
         if args.save_format == 'huggingface':
             checkpoint_path = os.path.join(model_dir, f"checkpoint_epoch_{epoch+1}")
             model.save_pretrained(checkpoint_path)
@@ -317,7 +304,7 @@ def main(args):
         print("No best checkpoint found. Exiting.")
         return
 
-    # --- MODIFICATION: Load model based on the save format ---
+    # --- Load model based on the save format ---
     print(f"Loading best model from: {best_checkpoint_path}")
     if args.save_format == 'huggingface':
         model = VivitForVideoClassification.from_pretrained(best_checkpoint_path).to(device)
@@ -327,7 +314,6 @@ def main(args):
         model.load_state_dict(torch.load(best_checkpoint_path))
         model.to(device)
     
-    # <--- NEW/MODIFIED: Use the extracted 'case_prefix' variable
     test_case_name = f"{case_prefix}_{args.game_name}_{best_epoch}_test"
     test_results = evaluate(model, test_dataloader, device, test_case_name, best_epoch, label2id, id2label)
     
@@ -353,7 +339,6 @@ if __name__ == '__main__':
         choices=['state_dict', 'huggingface'], 
         help="Format to save the model checkpoints ('state_dict' or 'huggingface')."
     )
-    # In a real script, you would parse arguments from the command line:
     args = parser.parse_args()
     
     

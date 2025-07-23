@@ -18,10 +18,8 @@ class_labels = ['down', 'same', 'up']
 label2id = {label: i for i, label in enumerate(class_labels)}
 id2label = {i: label for label, i in label2id.items()}
 
+# Extract file name, parent folder, player ID, and session ID from a file path.
 def get_file_name_and_parent_folder(file_path, game_name):
-    """
-    Extract file name, parent folder, player ID, and session ID from a file path.
-    """
     file_path = os.path.normpath(file_path)
     file_paths = file_path.split(os.sep)
     file_name, _ = os.path.splitext(os.path.basename(file_path))
@@ -31,16 +29,12 @@ def get_file_name_and_parent_folder(file_path, game_name):
     return file_name, parent_folder, player_id, session_id
 
 class MyCSVDataset(Dataset):
-    """
-    Custom Dataset class for loading data from CSV files.
-    """
     def __init__(self, csv_file, csv_file_2, game_name, image_processor):
         self.data = pd.read_csv(csv_file)
         self.gf = pd.read_csv(csv_file_2)
         self.game_name = game_name
         self.image_processor = image_processor
 
-        # Clean up data
         columns_to_drop = [col for col in self.gf.columns if "control" in col and
                            col != "[control]player_id" and
                            col != "[control]session_id"]
@@ -59,7 +53,6 @@ class MyCSVDataset(Dataset):
         start = int(sample['start_time']) * 4
         end = start + 24
 
-        # Convert game vector to tensor
         game_vector = self.gf[(self.gf['[control]player_id'] == player_id) & (self.gf['[control]session_id'] == session_id)]
         game_vector = game_vector.drop(columns=['[control]player_id', '[control]session_id'])
         game_vector = game_vector.iloc[start:end]
@@ -103,10 +96,8 @@ class MyCSVDataset(Dataset):
 
         return inputs
 
+# Compare the weights of the original and fine-tuned models.
 def compare_models(original_model, fine_tuned_model, output_dir):
-    """
-    Compare the weights of the original and fine-tuned models.
-    """
     # Create a directory to save the results
     os.makedirs(output_dir, exist_ok=True)
 

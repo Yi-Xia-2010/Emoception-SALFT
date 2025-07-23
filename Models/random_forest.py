@@ -62,15 +62,11 @@ def get_file_name_and_parent_folder(file_path, game_name):
 
 
 class MyCSVDataset(Dataset):
-    """
-    Custom dataset class for loading and preprocessing data for each game.
-    """
     def __init__(self, csv_file, csv_file_2, game_name):
         self.game_name = game_name
         self.data = pd.read_csv(csv_file)
         self.gf = pd.read_csv(csv_file_2)
         
-        # Remove unnecessary columns
         columns_to_drop = [col for col in self.gf.columns if "control" in col and 
                            col != "[control]player_id" and 
                            col != "[control]session_id"]
@@ -85,7 +81,6 @@ class MyCSVDataset(Dataset):
         gf = self.gf
         clip_path = sample['start_frame']
         
-        # Pass game_name
         file_name, parent_folder, player_id, session_id = get_file_name_and_parent_folder(clip_path, self.game_name)
         file_name = int(file_name)
 
@@ -105,7 +100,6 @@ class MyCSVDataset(Dataset):
         game_vector = game_vector.fillna(0).infer_objects(copy=False)
         game_array = np.array(game_vector.values)
         
-        # Ensure game_array has 24 rows, pad with zeros if not
         if game_array.shape[0] < 24:
             pad_width = ((0, 24 - game_array.shape[0]), (0, 0))
             game_array = np.pad(game_array, pad_width, mode='constant', constant_values=0)
@@ -122,7 +116,6 @@ class MyCSVDataset(Dataset):
                 frame = Image.open(frame_path).convert('RGB')
                 frames.append(frame)
             except FileNotFoundError:
-                # If a frame is not found, use a black image as a placeholder
                 print(f"Warning: Frame file not found '{frame_path}', using a black image instead.")
                 frames.append(Image.new('RGB', (224, 224), 'black'))
 
@@ -140,11 +133,7 @@ class MyCSVDataset(Dataset):
 
 
 # The `process_game` function encapsulates the complete workflow for a single game: loading data, training the model, testing, and returning results.
-
 def process_game(game_name):
-    """
-    Executes the full pipeline for a single game: data loading, training, testing, and evaluation.
-    """
     print(f"\n{'='*25}")
     print(f"Processing game: {game_name}")
     print(f"{'='*25}")
@@ -155,14 +144,14 @@ def process_game(game_name):
         print(f"Error: Data file '{csv_file}' not found. Skipping this game.")
         return None
 
-    # 1. Load Data
+
     dataset = MyCSVDataset(csv_file, CLEAN_DATA_CSV_PATH, game_name)
     
     if len(dataset) == 0:
         print(f"Warning: Dataset for game '{game_name}' is empty. Skipping.")
         return None
 
-    # 2. Split Train/Test Data
+
     data_num = len(dataset)
     train_num = math.ceil(data_num * 0.7)
     test_num = data_num - train_num
@@ -174,7 +163,6 @@ def process_game(game_name):
     train_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_num, test_num])
     print(f"Dataset size: {data_num}, Train: {len(train_dataset)}, Test: {len(test_dataset)}")
 
-    # 3. Prepare Training Data
     game_tensors = []
     labels = []
     for data in train_dataset:
@@ -187,13 +175,13 @@ def process_game(game_name):
     # Reshape
     game_tensors_np = game_tensors_np.reshape(game_tensors_np.shape[0], -1)
 
-    # 4. Train Model
+    # Train Model
     print("Training RandomForest model...")
     clf = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
     clf.fit(game_tensors_np, labels_np)
     print("Training complete.")
 
-    # 5. Prepare Test Data
+    # Prepare Test Data
     test_game_tensors = []
     test_labels = []
     for data in test_dataset:
@@ -206,30 +194,26 @@ def process_game(game_name):
     # Reshape
     test_game_tensors_np = test_game_tensors_np.reshape(test_game_tensors_np.shape[0], -1)
 
-    # 6. Predict and Evaluate
+    # Predict and Evaluate
     print("Making predictions...")
     test_pred = clf.predict(test_game_tensors_np)
 
     acc = accuracy_score(test_labels_np, test_pred)
     w_f1 = f1_score(test_labels_np, test_pred, average='weighted')
-    # ADDED: Calculate macro F1 score
     macro_f1 = f1_score(test_labels_np, test_pred, average='macro')
 
 
     print(f"Results for game '{game_name}':")
     print(f"  Accuracy: {acc:.4f}")
     print(f"  Weighted F1 Score: {w_f1:.4f}")
-    # ADDED: Print macro F1 score
     print(f"  Macro F1 Score: {macro_f1:.4f}")
 
-    # ADDED: Return macro_f1_score in the results dictionary
     return {"game": game_name, "accuracy": acc, "weighted_f1_score": w_f1, "macro_f1_score": macro_f1}
 
 
-### 4. Main Execution Flow
+#Main Execution Flow
 # This is the main entry point of the script. It iterates through the `GAMES_TO_RUN` list, calls the `process_game` function,
 # and then saves all the results to JSON and CSV files.
-
 def main():
     all_results = []
     

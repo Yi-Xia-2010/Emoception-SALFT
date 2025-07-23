@@ -4,11 +4,6 @@
 """
 This script performs Layer-wise Relevance Propagation (LRP) on a fine-tuned
 Video Vision Transformer (ViViT) model to interpret its predictions.
-
-It loads a video clip, passes it through the model, and calculates attention-based
-relevance scores for each part of the video. The final output is a consolidated
-image visualizing the original frames, the generated heatmaps of model focus,
-and an overlay of the two.
 """
 import os
 import random
@@ -32,9 +27,6 @@ import cv2
 from transformers import VivitImageProcessor, VivitForVideoClassification
 from tqdm import tqdm
 
-# ----------------------------
-# Utility Functions
-# ----------------------------
 
 def set_seed(seed: int):
     """
@@ -60,10 +52,8 @@ def get_file_name_and_parent_folder(file_path: str, game_name: str) -> Tuple[str
     player_id, session_id = video_name.split(f'_{game_name}_')
     return file_name, parent_folder, player_id, session_id
 
-# ----------------------------
-# Data Loading
-# ----------------------------
 
+# Data Loading
 class MyCSVDataset(Dataset):
     """
     Custom PyTorch Dataset to load video frames based on a CSV file.
@@ -118,10 +108,8 @@ class MyCSVDataset(Dataset):
             'label': torch.tensor(label, dtype=torch.long)
         }
 
+# Gets a preprocessed sample from the dataset and prepares it for the model.
 def prepare_input_from_dataset(dataset: MyCSVDataset, index: int, device: torch.device) -> Dict[str, torch.Tensor]:
-    """
-    Gets a preprocessed sample from the dataset and prepares it for the model.
-    """
     sample_data = dataset[index]
     if sample_data is None:
         raise RuntimeError(f"Could not load sample at index {index}. Check file paths.")
@@ -130,15 +118,9 @@ def prepare_input_from_dataset(dataset: MyCSVDataset, index: int, device: torch.
     pixel_values = sample_data['pixel_values'].unsqueeze(0)
     return {"pixel_values": pixel_values.to(device)}
 
-# ----------------------------
+
 # Model and Interpretation Logic
-# ----------------------------
-
 def load_model(model_ckpt_hub: str, local_model_path: Optional[str], id2label: Dict, label2id: Dict, device: torch.device) -> VivitForVideoClassification:
-    """
-    Loads the ViViT model, either from a local checkpoint or from Hugging Face hub.
-    """
-
     # Check if a valid local model path is provided
     use_local_checkpoint = local_model_path and os.path.exists(local_model_path) and local_model_path.endswith(('.pt', '.pth'))
 
@@ -161,10 +143,9 @@ def load_model(model_ckpt_hub: str, local_model_path: Optional[str], id2label: D
     model.eval() # Set model to evaluation mode
     return model
 
+# Calculates end-to-end relevance using the LRP method based on attention and gradients.
 def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
-    """
-    Calculates end-to-end relevance using the LRP method based on attention and gradients.
-    """
+
     num_tokens = attentions[0].shape[-1]
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
 
@@ -193,10 +174,8 @@ def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Te
     cls_relevance = relevance[:, 0, 1:]
     return cls_relevance
 
-# ----------------------------
-# Visualization
-# ----------------------------
 
+# Visualization
 def generate_and_save_visualization(
     cls_relevance: torch.Tensor,
     original_frames_tensor: torch.Tensor,
@@ -205,15 +184,11 @@ def generate_and_save_visualization(
     sample_index: int,
     predicted_class_name: str
 ):
-    """
-    Reshapes relevance, generates heatmaps for each frame, and saves a
-    consolidated visualization image with correctly positioned labels.
-    """
     # Create the output directory
     viz_output_dir = os.path.join(output_dir, f"{game_name}_lrp_sample{sample_index}_cls_{predicted_class_name}")
     os.makedirs(viz_output_dir, exist_ok=True)
     
-    # --- 1. Reshape Spatiotemporal Relevance ---
+    # --- Reshape Spatiotemporal Relevance ---
     num_frames, channels, height, width = original_frames_tensor.shape
     # For vivit-b-16x2, temporal tubelet size is 2, patch size is 16
     num_temporal_tokens = num_frames // 2
@@ -224,7 +199,7 @@ def generate_and_save_visualization(
     
     cls_relevance_reshaped = cls_relevance.reshape(1, num_temporal_tokens, grid_size, grid_size)
 
-    # --- 2. Generate Per-Frame Heatmaps ---
+    # --- Generate Per-Frame Heatmaps ---
     temporal_maps = cls_relevance_reshaped[0]
     frame_heatmaps = []
     for t in range(num_temporal_tokens):
@@ -233,7 +208,7 @@ def generate_and_save_visualization(
         # Each temporal token's heatmap applies to 2 consecutive frames
         frame_heatmaps.extend([heatmap_upsampled, heatmap_upsampled.copy()])
 
-    # --- 3. Prepare All Visualization Images in Memory ---
+    # --- Prepare All Visualization Images in Memory ---
     all_original_frames, all_heatmaps_norm, all_overlays = [], [], []
 
     for i in range(num_frames):
@@ -257,7 +232,7 @@ def generate_and_save_visualization(
         overlay = cv2.addWeighted(original_frame, 0.6, heatmap_color_rgb, 0.4, 0)
         all_overlays.append(overlay)
 
-    # --- 4. Create and Save the Consolidated Plot ---
+    # --- Create and Save the Consolidated Plot ---
     rows, cols = 6, 16
     fig, axs = plt.subplots(rows, cols, figsize=(cols * 2, rows * 2.2))
     
@@ -307,9 +282,8 @@ def generate_and_save_visualization(
     
     print(f"\nConsolidated visualization has been saved to: {save_path}")
 
-# ----------------------------
+
 # Main Execution
-# ----------------------------
 def main():
     parser = argparse.ArgumentParser(description="ViViT LRP Interpretation Script")
     parser.add_argument('--game_name', type=str, default='solid', help='Name of the game for dataset loading.')
@@ -322,7 +296,7 @@ def main():
 
     set_seed(args.seed)
 
-    # --- 1. Setup ---
+    # --- Setup ---
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     
@@ -332,7 +306,7 @@ def main():
     id2label = {i: label for label, i in label2id.items()}
     print(f"Class mapping: {id2label}")
 
-    # --- 2. Load Model and Data ---
+    # --- Load Model and Data ---
     model = load_model(model_ckpt_hub, args.model_path, id2label, label2id, device)
     
     dataset = MyCSVDataset(
@@ -345,7 +319,7 @@ def main():
     inputs = prepare_input_from_dataset(dataset, args.sample_index, device)
     original_frames_tensor = inputs['pixel_values'][0]
 
-    # --- 3. Register Hooks ---
+    # --- Register Hooks ---
     all_attentions, all_attn_grads = [], []
     hooks = []
 
@@ -357,7 +331,7 @@ def main():
     for layer in model.vivit.encoder.layer:
         hooks.append(layer.attention.attention.register_forward_hook(save_attention_hook))
 
-    # --- 4. Forward and Backward Pass ---
+    # --- Forward and Backward Pass ---
     print("\nRunning forward and backward pass...")
     model.zero_grad()
     outputs = model(**inputs)
@@ -369,13 +343,13 @@ def main():
     print(f"Predicted class: '{id2label[predicted_class]}' (ID: {predicted_class})")
     print(f"Captured {len(all_attentions)} attention tensors and {len(all_attn_grads)} gradients.")
 
-    # --- 5. Calculate LRP Relevance ---
+    # --- Calculate LRP Relevance ---
     if not all_attentions or not all_attn_grads:
         raise RuntimeError("Attention or gradients were not captured. Check hooks.")
         
     cls_relevance = calculate_lrp_relevance(all_attentions, all_attn_grads, device)
 
-    # --- 6. Generate Visualization ---
+    # --- Generate Visualization ---
     generate_and_save_visualization(
         cls_relevance,
         original_frames_tensor,
@@ -385,7 +359,7 @@ def main():
         id2label[predicted_class]
     )
 
-    # --- 7. Clean Up ---
+    # --- Clean Up ---
     for h in hooks:
         h.remove()
     print("Hooks removed. Script finished.")

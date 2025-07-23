@@ -79,9 +79,8 @@ class MyCSVDataset(Dataset):
         
         return inputs
 
-# --- Evaluation and Logging ---
+
 def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
-    """Evaluates the model and returns performance metrics."""
     model.eval()
     all_labels = []
     all_preds = []
@@ -137,26 +136,22 @@ def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label):
     return results
 
 def save_results_to_json(filepath, data):
-    """Saves evaluation results to a JSON file."""
+
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# --- Main Training and Evaluation Script ---
+
 def main(args):
-    """Main function to run the training and evaluation pipeline."""
     set_seed(42)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # --- Configuration ---
     class_labels = ['down', 'same', 'up']
     label2id = {label: i for i, label in enumerate(class_labels)}
     id2label = {i: label for label, i in label2id.items()}
     
-    # <--- NEW/MODIFIED: Logic to automatically extract the prefix for case_name
-    # Get the final directory name from the path (e.g., "./dir/my_results" -> "my_results")
     base_dir_name = os.path.basename(args.output_dir)
-    # Remove the common suffix to get the desired prefix (e.g., "my_results" -> "my")
+
     case_prefix = base_dir_name.removesuffix('_results')
     print(f"Automatically extracted case prefix: '{case_prefix}'")
     
@@ -169,7 +164,6 @@ def main(args):
     
     model_ckpt_hub = "google/vivit-b-16x2-kinetics400"
 
-    # --- Data Loading ---
     image_processor = VivitImageProcessor.from_pretrained(model_ckpt_hub)
     
     csv_file = f'../Dataset/new_{args.game_name}.csv'
@@ -304,7 +298,6 @@ def main(args):
     else: # 'state_dict' format
         model.load_state_dict(torch.load(best_checkpoint_path))
     
-    # <--- NEW/MODIFIED: Use the extracted 'case_prefix' variable
     test_case_name = f"{case_prefix}_{args.game_name}_{best_epoch}_test"
     test_results = evaluate(model, test_dataloader, device, test_case_name, best_epoch, label2id, id2label)
     
@@ -330,7 +323,7 @@ if __name__ == '__main__':
         choices=['state_dict', 'huggingface'], 
         help="Format to save the model checkpoints ('state_dict' or 'huggingface')."
     )
-    # In a real script, you would parse arguments from the command line:
+
     args = parser.parse_args()
     
     

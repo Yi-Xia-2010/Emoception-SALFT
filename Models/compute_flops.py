@@ -10,7 +10,7 @@ def analyze_model(model, input_shape, num_steps=10):
     Analyzes the computational cost of a given model.
 
     Args:
-        model: The model to be analyzed (with requires_grad already set).
+        model: The model to be analyzed.
         input_shape: The shape of the input tensor (batch_size, num_frames, channels, height, width).
         num_steps: The number of steps for profiling.
 
@@ -83,14 +83,14 @@ def main():
     """
     Main function - compares the performance of different fine-tuning strategies.
     """
-    # --- 1. Environment Setup ---
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"PyTorch Version: {torch.__version__}")
     print(f"Using device: {device}")
     if device == 'cuda':
         print(f"CUDA Device: {torch.cuda.get_device_name(0)}")
 
-    # --- 2. Define Analysis Configurations ---
+
     # To ensure a fair comparison, the classifier head is kept trainable in all strategies.
     configurations = [
         {
@@ -103,14 +103,14 @@ def main():
         }
     ]
     
-    # --- 3. Set Input Shape ---
+
     batch_size = 4
     input_shape = (batch_size, 32, 3, 224, 224)
     print(f"\nInput shape (batch_size={batch_size}): {input_shape}\n")
 
     all_results = []
 
-    # --- 4. Loop Through and Analyze Each Configuration ---
+
     for config in configurations:
         print(f"--- Analyzing: {config['name']} ---")
         
@@ -132,16 +132,16 @@ def main():
             for param in model.parameters():
                 param.requires_grad = True
         else:
-            # First, freeze all parameters
+
             for param in model.parameters():
                 param.requires_grad = False
-            # Then, unfreeze the specified layers
+
             for name, param in model.named_parameters():
                 for layer_name in config["layers_to_activate"]:
                     if layer_name in name:
                         param.requires_grad = True
         
-        # Run the analysis
+
         prof, model_stats = analyze_model(model, input_shape)
         
         # Extract performance metrics
@@ -149,7 +149,7 @@ def main():
         cpu_time_ms = sum(event.cpu_time for event in prof.key_averages()) / 1e6
         cuda_time_ms = sum(event.cuda_time for event in prof.key_averages() if hasattr(event, 'cuda_time')) / 1e6
         flops_step =flops / 10
-        # Store the results
+
         all_results.append({
             "Strategy": config['name'],
             "Trainable Params": model_stats['trainable_params'],
@@ -160,7 +160,6 @@ def main():
         
         print(f"--- Analysis Complete: {config['name']} ---\n")
 
-    # --- 5. Display and Save the Final Comparison ---
     results_df = pd.DataFrame(all_results)
     results_df.set_index("Strategy", inplace=True)
     
