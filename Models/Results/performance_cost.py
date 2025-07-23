@@ -13,12 +13,12 @@ from torch.utils.data import Dataset
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
-# --- 1. Global Constants ---
+# --- Global Constants ---
 # Define the per-step computational cost in GFLOPs for each type
 COST_FULL_FINETUNING = 6402.90
 COST_FINETUNE_LAYER0 = 4449.00
 
-# --- 2. Logging Configuration ---
+# --- Logging Configuration ---
 # Configure the logger to replace print for more flexible output control
 logging.basicConfig(
     level=logging.INFO,
@@ -27,8 +27,8 @@ logging.basicConfig(
 )
 
 
-# --- 3. Mock/Placeholder Objects ---
-# To allow this script to run independently, we create mock objects for dependencies
+# --- Mock Objects ---
+# To allow this script to run independently, create mock objects for dependencies
 # not required for calculating the dataset length.
 class MockImageProcessor:
     """A mock image processor for instantiating the Dataset without installing transformers."""
@@ -39,27 +39,19 @@ class MockImageProcessor:
 mock_label2id: Dict[str, int] = {"decrease": 0, "increase": 1, "maintain": 2}
 
 
-# --- 4. Dataset Definition ---
 class MyCSVDataset(Dataset):
-    """
-    Custom Dataset for loading video frames and game data.
-    The main purpose of this class is to determine the total dataset size by reading the primary CSV file.
-    """
     def __init__(self, csv_file: Path, csv_file_2: Path, game_name: str,
                  image_processor: Any, label2id: Dict[str, int], root_dir: Path):
         self.game_name = game_name
         self.image_processor = image_processor
         self.label2id = label2id
         self.root_dir = root_dir
-
-        # This is the key part for determining dataset size
         if not csv_file.is_file():
             logging.warning(f"Primary CSV file not found: {csv_file}. Dataset size will be 0.")
             self.data = pd.DataFrame()
         else:
             self.data = pd.read_csv(csv_file)
 
-        # The rest of __init__ is not essential for __len__ but is kept for completeness.
         if csv_file_2.is_file():
             try:
                 self.gf = pd.read_csv(csv_file_2)
@@ -79,7 +71,7 @@ class MyCSVDataset(Dataset):
         return len(self.data)
 
 
-# --- 5. Core Functions ---
+# --- Core Functions ---
 def read_json_files_from_directory(json_dir: Path) -> Optional[Dict[str, Any]]:
     """
     Safely reads all .json files from a specified directory.
@@ -307,9 +299,7 @@ def plot_results(json_data: Dict[str, Any], save_dir: Path) -> None:
             logging.warning(f"  -> Skipping plot generation for {filename} as no plottable data was found.")
 
 
-# --- 6. Main Execution ---
 def main():
-    """Main function to parse arguments and execute tasks sequentially."""
     parser = argparse.ArgumentParser(
         description="Read game experiment JSON data, calculate additional info, and save back to the original directory with new filenames.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -342,20 +332,20 @@ def main():
 
     json_dir_path = Path(args.json_dir)
 
-    # Step 1: Read JSON files
+    # Read JSON files
     json_data = read_json_files_from_directory(json_dir_path)
 
     if not json_data:
         logging.warning("No JSON data was read. Exiting program.")
         return
 
-    # Step 2: Calculate and add information
+    # Calculate and add information
     calculate_and_add_info(json_data, args)
     
-    # Step 3: Save the updated data to the original directory with new filenames
+    # Save the updated data to the original directory with new filenames
     save_json_files(json_data, json_dir_path)
 
-    # Step 4: Generate plots if requested
+    # Generate plots if requested
     if args.plot:
         plot_results(json_data, json_dir_path)
     

@@ -107,7 +107,6 @@ def consolidate_results(input_dir, output_file):
         print(f"\nError saving the final summary file: {e}")
 
 
-# --- Main execution block ---
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Consolidates multiple result CSV files into a single summary file.",

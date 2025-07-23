@@ -41,7 +41,6 @@ def analyze_game_results(root_folder):
 
                     accuracy = None
                     weighted_f1 = None
-                    # --- Added f1_macro variable ---
                     f1_macro = None
 
                     # --- Updated data extraction logic to handle multiple formats ---
@@ -51,14 +50,12 @@ def analyze_game_results(root_folder):
                     if isinstance(data, dict):
                         accuracy = data.get('accuracy')
                         weighted_f1 = data.get('f1_weighted')
-                        # --- Added f1_macro extraction ---
                         f1_macro = data.get('f1_macro')
 
                     # Format 2: A list containing a dictionary (old and new style)
                     # [{ "MODEL_NAME": { "Accuracy": 0.76, "Weighted avg f1": 0.76, ... } }]
                     # OR [{ "accuracy": 0.75, "f1_weighted": 0.75, "f1_macro": 0.74, ... }]
                     elif isinstance(data, list) and data and isinstance(data[0], dict):
-                        # This handles both the sample you provided and the old format
                         metrics_dict = data[0]
                         
                         # Check for new format keys first within the list
@@ -76,7 +73,7 @@ def analyze_game_results(root_folder):
                                 # --- Added f1_macro extraction for old format ---
                                 f1_macro = metrics.get('f1_macro')
 
-                    # --- End of logic ---
+
 
                     # --- Updated condition to include f1_macro ---
                     if accuracy is not None and weighted_f1 is not None and f1_macro is not None:
@@ -104,9 +101,9 @@ def analyze_game_results(root_folder):
         print("No valid result data found.")
         return pd.DataFrame()
 
-# --- Main execution block ---
+
 if __name__ == "__main__":
-    # --- Set up command-line argument parsing ---
+
     parser = argparse.ArgumentParser(
         description="Scans game folders, extracts performance metrics from 'test_results.json', and saves them to a CSV file.",
         formatter_class=argparse.RawTextHelpFormatter # Keep help message formatting
@@ -127,7 +124,6 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    # Pass the parsed path to the main function and get the results.
     results_df = analyze_game_results(args.folder_path)
 
     # If the DataFrame was generated successfully, print and save it.
