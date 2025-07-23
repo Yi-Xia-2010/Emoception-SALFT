@@ -1,0 +1,56 @@
+[
+    {
+        "game": "apex",
+        "accuracy": 0.596035,
+        "weighted_f1_score": 0.552913,
+        "macro_f1_score": 0.467366
+    },
+    {
+        "game": "endless",
+        "accuracy": 0.603078,
+        "weighted_f1_score": 0.551562,
+        "macro_f1_score": 0.485831
+    },
+    {
+        "game": "fps",
+        "accuracy": 0.620957,
+        "weighted_f1_score": 0.571518,
+        "macro_f1_score": 0.472361
+    },
+    {
+        "game": "gallery",
+        "accuracy": 0.570546,
+        "weighted_f1_score": 0.422305,
+        "macro_f1_score": 0.261482
+    },
+    {
+        "game": "gun",
+        "accuracy": 0.54891,
+        "weighted_f1_score": 0.466664,
+        "macro_f1_score": 0.374813
+    },
+    {
+        "game": "platform",
+        "accuracy": 0.54948,
+        "weighted_f1_score": 0.478133,
+        "macro_f1_score": 0.389003
+    },
+    {
+        "game": "solid",
+        "accuracy": 0.588542,
+        "weighted_f1_score": 0.52876,
+        "macro_f1_score": 0.403705
+    },
+    {
+        "game": "tiny",
+        "accuracy": 0.610774,
+        "weighted_f1_score": 0.579509,
+        "macro_f1_score": 0.522038
+    },
+    {
+        "game": "topdown",
+        "accuracy": 0.621324,
+        "weighted_f1_score": 0.578202,
+        "macro_f1_score": 0.494073
+    }
+]

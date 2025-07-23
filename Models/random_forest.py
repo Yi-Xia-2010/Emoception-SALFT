@@ -230,7 +230,7 @@ def process_game(game_name):
 # This is the main entry point of the script. It iterates through the `GAMES_TO_RUN` list, calls the `process_game` function,
 # and then saves all the results to JSON and CSV files.
 
-if __name__ == '__main__':
+def main():
     all_results = []
     
     # Iterate over all specified games
@@ -249,17 +249,34 @@ if __name__ == '__main__':
         print("Final Results Summary:")
         print(results_df)
 
-        # Define output filenames
-        json_output_path = "Results/random_forest_results.json"
-        csv_output_path = "Results/random_forest_results.csv"
 
-        # Save to JSON file
+        output_dir = 'Results/results_sum'
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            print(f"Directory '{output_dir}' created.")
+
+        # Define output filenames. The name 'random_forest' will be used as the method name by the consolidator.
+        method_name = 'random_forest'
+        json_output_path = os.path.join(output_dir, f"{method_name}_results.json")
+        csv_output_path = os.path.join(output_dir, f"{method_name}_results.csv")
+
+        # Save to JSON file (original format)
         with open(json_output_path, 'w', encoding='utf-8') as f:
             json.dump(all_results, f, indent=4)
-        print(f"\nResults saved to: {json_output_path}")
+        print(f"\nJSON results saved to: {json_output_path}")
 
-        # Save to CSV file
-        results_df.to_csv(csv_output_path, index=False, encoding='utf-8-sig')
-        print(f"Results saved to: {csv_output_path}")
+        # MODIFIED: Rename columns for compatibility with the consolidation script before saving to CSV.
+        df_for_csv = results_df.rename(columns={
+            'weighted_f1_score': 'weighted avg f1',
+            'macro_f1_score': 'f1_macro'
+        })
+        
+        # Save the modified DataFrame to a CSV file that is compatible with the consolidator
+        df_for_csv.to_csv(csv_output_path, index=False, encoding='utf-8-sig')
+        print(f"Consolidator-compatible CSV saved to: {csv_output_path}")
     else:
         print("No results were generated. Please check your configuration and data files.")
+
+
+if __name__ == '__main__':
+    main()
