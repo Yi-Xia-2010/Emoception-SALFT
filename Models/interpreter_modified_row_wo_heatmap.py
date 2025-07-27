@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-This script performs Layer-wise Relevance Propagation (LRP) on a ViViT model to interpret its predictions.
-"""
+
 
 import os
 import random
@@ -166,8 +164,8 @@ def load_model(model_path: Optional[str], model_ckpt_hub: str, id2label: Dict, l
     model.eval() # Set model to evaluation mode
     return model
 
-# Calculates end-to-end relevance using the LRP method based on attention and gradients.
-def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
+
+def calculate_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
     num_tokens = attentions[0].shape[-1]
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
 
@@ -181,7 +179,7 @@ def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Te
         attn_heads_fused = attn.mean(dim=1)
         grad_heads_fused = grad.mean(dim=1)
 
-        # LRP rule: relevance is proportional to (gradient * attention)
+        # rule: relevance is proportional to (gradient * attention)
         R_layer = attn_heads_fused * grad_heads_fused
         R_layer = torch.clamp(R_layer, min=0) # Keep only positive contributions
 
@@ -208,7 +206,7 @@ def generate_and_save_visualization(
 ):
 
     # Create the output directory
-    viz_output_dir = os.path.join(output_dir, f"{game_name}_lrp_sample{sample_index}_cls_{predicted_class_name}")
+    viz_output_dir = os.path.join(output_dir, f"{game_name}_sample{sample_index}_cls_{predicted_class_name}")
     os.makedirs(viz_output_dir, exist_ok=True)
     
     # --- Reshape Spatiotemporal Relevance ---
@@ -282,7 +280,7 @@ def generate_and_save_visualization(
     # Set horizontal and vertical space between subplots to zero
     plt.subplots_adjust(wspace=0.01, hspace=0.01)
     
-    save_path = os.path.join(viz_output_dir, f"{game_name}_lrp_sample{sample_index}_cls_{predicted_class_name}.png")
+    save_path = os.path.join(viz_output_dir, f"{game_name}_sample{sample_index}_cls_{predicted_class_name}.png")
     plt.savefig(save_path, dpi=200, bbox_inches='tight')
     plt.close(fig)
     
@@ -291,7 +289,7 @@ def generate_and_save_visualization(
 
 # Main Execution
 def main():
-    parser = argparse.ArgumentParser(description="ViViT LRP Interpretation Script")
+    parser = argparse.ArgumentParser(description="ViViT Interpretation Script")
     parser.add_argument('--game_name', type=str, default='solid', help='Name of the game for dataset loading.')
     parser.add_argument('--sample_index', type=int, default=80, help='Index of the sample to process from the dataset.')
     parser.add_argument('--model_path', type=str, default='finetune_layer0_results/solid/checkpoints/checkpoint_epoch_10.pt', help='Path to a local model. Can be a directory (for a full HF model) or a .pt/.pth file (for a state dict).')
@@ -349,11 +347,11 @@ def main():
     print(f"Predicted class: '{id2label[predicted_class]}' (ID: {predicted_class})")
     print(f"Captured {len(all_attentions)} attention tensors and {len(all_attn_grads)} gradients.")
 
-    # --- Calculate LRP Relevance ---
+    # --- Calculate Relevance ---
     if not all_attentions or not all_attn_grads:
         raise RuntimeError("Attention or gradients were not captured. Check hooks.")
         
-    cls_relevance = calculate_lrp_relevance(all_attentions, all_attn_grads, device)
+    cls_relevance = calculate_relevance(all_attentions, all_attn_grads, device)
 
     # --- Generate Visualization ---
     generate_and_save_visualization(
