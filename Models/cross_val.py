@@ -232,11 +232,11 @@ def main(args):
         )
         trainable_sub_modules_list = []
 
-        # Add embeddings
+        # Add embeddings in trainable list
         if hasattr(temp_model_for_structure.vivit, 'embeddings'):
             trainable_sub_modules_list.append("vivit.embeddings")
 
-        # Add encoder layers
+        # Add encoder layers in trainable list
         if hasattr(temp_model_for_structure.vivit.encoder, 'layer'):
             for i in range(len(temp_model_for_structure.vivit.encoder.layer)):
                 trainable_sub_modules_list.append(f"vivit.encoder.layer.{i}")

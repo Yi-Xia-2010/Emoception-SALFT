@@ -182,7 +182,7 @@ def compare_models(original_model, fine_tuned_model, output_dir):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Compare weights of a pre-trained and a fine-tuned ViViT model.")
+    parser = argparse.ArgumentParser(description="Compare parameters of a pre-trained and a fine-tuned ViViT model.")
     parser.add_argument("--game_name", type=str, required=True, help="Name of the game (e.g., 'endles') for dataset loading.")
     parser.add_argument("--finetuned_model_path", type=str, required=True, help="Path to the fine-tuned model. Can be a directory (Hugging Face format) or a .pt file (state_dict).")
     parser.add_argument("--model_ckpt", type=str, default="google/vivit-b-16x2-kinetics400", help="Base model checkpoint from Hugging Face.")
