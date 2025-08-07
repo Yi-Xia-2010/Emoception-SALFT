@@ -8,7 +8,6 @@ import shutil
 import sys
 from typing import List, Tuple, Dict, Optional, Union
 
-# Set the backend for Matplotlib before importing pyplot
 import matplotlib
 matplotlib.use('Agg')
 
@@ -158,6 +157,9 @@ def load_model(model_path: Optional[str], model_ckpt_hub: str, id2label: Dict, l
 def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
     num_tokens = attentions[0].shape[-1]
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
+    """
+    Calculate relevance matrix, note the relevance here is not the same as defined in Chefer's paper and is replaced by raw attetion
+    """
 
     for attn, grad in zip(reversed(attentions), grads):
         if attn.shape != grad.shape:
@@ -179,9 +181,7 @@ def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Te
     return cls_relevance
 
 def generate_lrp_for_target(model, inputs, target_id, retain_graph=False):
-    """
-    A helper function to correctly generate LRP relevance for a specific target class.
-    """
+
     model.zero_grad()
     all_attentions, all_attn_grads = [], []
     hooks = []
@@ -284,7 +284,7 @@ def generate_and_save_visualization(
     fig.text(0.01, 0.083, 'Overlays\n(17-32)', ha='left', va='center', rotation='vertical', fontsize=18)
 
     # Add a main title to the figure for clarity
-    fig.suptitle(f"LRP for Class: '{class_name}' (Game: {game_name}, Sample: {sample_index})", fontsize=24, y=1.0)
+    fig.suptitle(f"Interpretation for Class: '{class_name}' (Game: {game_name}, Sample: {sample_index})", fontsize=24, y=1.0)
 
     plt.tight_layout(rect=[0.03, 0, 1, 0.98])
     plt.subplots_adjust(wspace=0.01, hspace=0.01)
@@ -302,11 +302,11 @@ def generate_and_save_visualization(
 
 # Main Execution
 def main():
-    parser = argparse.ArgumentParser(description="ViViT LRP script to find one correct sample per class.")
+    parser = argparse.ArgumentParser(description="ViViT interpretation script to find one correct sample per class.")
     parser.add_argument('--game_name', type=str, default='solid', help='Name of the game for dataset loading.')
     parser.add_argument('--model_path', type=str, default='finetune_layer0_results/solid/checkpoints/checkpoint_epoch_10.pt', help='Path to a local model (.pt, .pth, or directory).')
     parser.add_argument('--base_path', type=str, default='../Dataset/', help='Base directory path for the dataset.')
-    parser.add_argument('--output_dir', type=str, default='interpretation_results/class_samples', help='Directory to save the output visualizations.')
+    parser.add_argument('--output_dir', type=str, default='interpretation_samples/all_games_with_heatmap', help='Directory to save the output visualizations.')
     parser.add_argument('--seed', type=int, default=42, help='Random seed for reproducibility.')
     args = parser.parse_args()
 
@@ -375,8 +375,8 @@ def main():
             found_classes.add(ground_truth_name)
             original_frames_tensor = inputs['pixel_values'][0]
 
-            # Generate LRP explanation
-            print(f"--- Generating LRP for class '{ground_truth_name}' ---")
+            # Generate explanation
+            print(f"--- Generating interpretation for class '{ground_truth_name}' ---")
             relevance = generate_lrp_for_target(model, inputs, ground_truth_id, retain_graph=False)
             
             # Generate and save the visualization
