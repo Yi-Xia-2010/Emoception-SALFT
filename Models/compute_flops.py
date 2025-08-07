@@ -7,7 +7,7 @@ import time
 
 def analyze_model(model, input_shape, num_steps=10):
     """
-    Analyzes the computational cost of a given model.
+    Measure the computational cost of a given model.
 
     Args:
         model: The model to be analyzed.
@@ -81,7 +81,7 @@ def analyze_model(model, input_shape, num_steps=10):
 
 def main():
     """
-    Main function - compares the performance of different fine-tuning strategies.
+    Main function - compares the efficiency per interation of different fine-tuning strategies.
     """
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
