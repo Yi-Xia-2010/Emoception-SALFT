@@ -154,7 +154,7 @@ def load_model(model_path: Optional[str], model_ckpt_hub: str, id2label: Dict, l
     model.eval()
     return model
 
-def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
+def calculate_new_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
     num_tokens = attentions[0].shape[-1]
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
     """
@@ -180,7 +180,7 @@ def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Te
     cls_relevance = relevance[:, 0, 1:]
     return cls_relevance
 
-def generate_lrp_for_target(model, inputs, target_id, retain_graph=False):
+def generate_new_relevance_for_target(model, inputs, target_id, retain_graph=False):
 
     model.zero_grad()
     all_attentions, all_attn_grads = [], []
@@ -206,7 +206,7 @@ def generate_lrp_for_target(model, inputs, target_id, retain_graph=False):
     if not all_attentions or not all_attn_grads:
         raise RuntimeError("Attention or gradients were not captured.")
 
-    relevance = calculate_lrp_relevance(all_attentions, all_attn_grads, model.device)
+    relevance = calculate_new_relevance(all_attentions, all_attn_grads, model.device)
     return relevance
 
 
@@ -377,7 +377,7 @@ def main():
 
             # Generate explanation
             print(f"--- Generating interpretation for class '{ground_truth_name}' ---")
-            relevance = generate_lrp_for_target(model, inputs, ground_truth_id, retain_graph=False)
+            relevance = generate_new_relevance_for_target(model, inputs, ground_truth_id, retain_graph=False)
             
             # Generate and save the visualization
             generate_and_save_visualization(
