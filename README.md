@@ -43,7 +43,7 @@ This folder contains all scripts related to our methodology and the content ment
 
 --'cross_val.py' is the script that conducts the cross-validation protocol mentioned in the paper. The results are stored in the folder 'cross_val_results'.
 
---'interpreter_row_wo_heatmap.py' is the script to generate the interpreation without heatmap using our proposed method. 'interpreter_row.py' is the script to generate the interpreation with heatmap. 'interpreter_auto_row' is the script that selects a sample from each class where the predicted label matches the ground truth and generates its interpretation. 
+--'interpreter_wo_heatmap.py' is the script to generate the interpreation without heatmap for specific samples. 'interpreter.py' is the script to generate the interpreation with heatmap. 'interpreter_auto' is the script that automatically selects a sample from each class where the predicted label matches the ground truth and generates its interpretation. 
 
 --Folder 'interpretation_samples' contains the interpretation examples. 
 
