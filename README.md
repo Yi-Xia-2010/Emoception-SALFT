@@ -41,7 +41,7 @@ This folder contains all scripts related to our methodology and the content ment
 
 --Folder 'Results' contains the results from 'random_forest.py', 'full_finetuning_70.py', 'continue_finetuning_layer0_70.py', and 'finetuning_layer0_70.py'. It also contains the script 'validation_trace.py' to trace the the performance and cost in validation and the script 'performance_cost.py' to generate the performance_vs_cost figures, whose results are saved in 'validation_trace_results'. The scripts 'summary_results_each_method.py' and 'overall_results.py' are helper to aggregate all results.
 
---'cross_val.py' is the script that conducts the cross-validation protocol mentioned in the paper. The results, along with those from a mentioned preliminary test, are stored in the folder 'cross_val_results'.
+--'cross_val.py' is the script that conducts the cross-validation protocol mentioned in the paper. The results are stored in the folder 'cross_val_results'.
 
 --'interpreter_row_wo_heatmap.py' is the script to generate the interpreation without heatmap using our proposed method. 'interpreter_row.py' is the script to generate the interpreation with heatmap. 'interpreter_auto_row' is the script that selects a sample from each class where the predicted label matches the ground truth and generates its interpretation. 
 
