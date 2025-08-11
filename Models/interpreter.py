@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This script performs Layer-wise Relevance Propagation (LRP) on a fine-tuned
+This script performs our method on a fine-tuned
 Video Vision Transformer (ViViT) model to interpret its predictions.
 """
 import os
@@ -143,14 +143,14 @@ def load_model(model_ckpt_hub: str, local_model_path: Optional[str], id2label: D
     model.eval() # Set model to evaluation mode
     return model
 
-# Calculates end-to-end relevance using the LRP method based on attention and gradients.
+# Calculates end-to-end relevance using the modified LRP method based on attention and gradients.
 def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor], device: torch.device) -> torch.Tensor:
 
     num_tokens = attentions[0].shape[-1]
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
 
     # Iterate through layers from last to first
-    for attn, grad in zip(reversed(attentions), reversed(grads)):
+    for attn, grad in zip(reversed(attentions), grads):
         if attn.shape != grad.shape:
             print(f"Skipping layer due to shape mismatch: attn {attn.shape}, grad {grad.shape}")
             continue
@@ -159,7 +159,7 @@ def calculate_lrp_relevance(attentions: List[torch.Tensor], grads: List[torch.Te
         attn_heads_fused = attn.mean(dim=1)
         grad_heads_fused = grad.mean(dim=1)
 
-        # LRP rule: relevance is proportional to (gradient * attention)
+        # Rule: relevance is proportional to (gradient * attention)
         R_layer = attn_heads_fused * grad_heads_fused
         R_layer = torch.clamp(R_layer, min=0) # Keep only positive contributions
 
@@ -251,7 +251,7 @@ def generate_and_save_visualization(
         axs[row_offset + 2, col].axis('off')
 
     # Add a main title to the entire figure.
-    fig.suptitle(f"LRP Visualization for Sample {sample_index} (Predicted: {predicted_class_name})", fontsize=24)
+    fig.suptitle(f"Visualization for Sample {sample_index} (Predicted: {predicted_class_name})", fontsize=24)
 
     # Adjust subplot parameters for a tight layout.
     # `rect` leaves space: [left, bottom, right, top]. We leave space on left for row labels and top for suptitle.
@@ -285,7 +285,7 @@ def generate_and_save_visualization(
 
 # Main Execution
 def main():
-    parser = argparse.ArgumentParser(description="ViViT LRP Interpretation Script")
+    parser = argparse.ArgumentParser(description="ViViT Interpretation Script")
     parser.add_argument('--game_name', type=str, default='solid', help='Name of the game for dataset loading.')
     parser.add_argument('--sample_index', type=int, default=30, help='Index of the sample to process from the dataset.')
     parser.add_argument('--model_path', type=str, default='finetune_layer0_results/solid/checkpoints/checkpoint_epoch_10.pt', help='Path to the local fine-tuned model checkpoint.')
@@ -343,7 +343,7 @@ def main():
     print(f"Predicted class: '{id2label[predicted_class]}' (ID: {predicted_class})")
     print(f"Captured {len(all_attentions)} attention tensors and {len(all_attn_grads)} gradients.")
 
-    # --- Calculate LRP Relevance ---
+    # --- Calculate Relevance ---
     if not all_attentions or not all_attn_grads:
         raise RuntimeError("Attention or gradients were not captured. Check hooks.")
         

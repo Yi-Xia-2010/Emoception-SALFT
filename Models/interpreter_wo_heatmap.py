@@ -170,7 +170,7 @@ def calculate_relevance(attentions: List[torch.Tensor], grads: List[torch.Tensor
     relevance = torch.eye(num_tokens, device=device).unsqueeze(0)
 
     # Iterate through layers from last to first
-    for attn, grad in zip(reversed(attentions), reversed(grads)):
+    for attn, grad in zip(reversed(attentions), grads):
         if attn.shape != grad.shape:
             print(f"Skipping layer due to shape mismatch: attn {attn.shape}, grad {grad.shape}")
             continue

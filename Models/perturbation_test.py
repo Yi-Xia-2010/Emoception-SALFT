@@ -127,28 +127,48 @@ class OurMethodInterpreter(Interpreter):
     def interpret(self, inputs: torch.Tensor, target_class: int) -> torch.Tensor:
         all_attentions, all_attn_grads = [], []
         hooks = []
+
         def save_attention_hook(module, input, output):
             attn_weights = output[1]
             all_attentions.append(attn_weights.detach())
-            attn_weights.register_hook(lambda grad: all_attn_grads.insert(0, grad))
+            # This makes the gradient list's order back-to-front,
+            # matching the order in which they are computed (last layer's grad first).
+            attn_weights.register_hook(lambda grad: all_attn_grads.append(grad))
+
         for layer in self.model.vivit.encoder.layer:
             hooks.append(layer.attention.attention.register_forward_hook(save_attention_hook))
+
         self.model.zero_grad()
         outputs = self.model(pixel_values=inputs)
         logits = outputs.logits
         target_logit = logits[0, target_class]
         target_logit.backward(retain_graph=True)
+        
         for h in hooks: h.remove()
+
+        # We reverse the attentions list to match the back-to-front order of the gradients.
+        # Now, both lists are in the order: [layer_last, layer_penultimate, ..., layer_0]
+        all_attentions.reverse()
+
         num_tokens = all_attentions[0].shape[-1]
         relevance = torch.eye(num_tokens, device=self.device).unsqueeze(0)
+
+        # The loop now iterates from the last layer to the first.
         for attn, grad in zip(all_attentions, all_attn_grads):
             attn_heads_fused = attn.mean(dim=1)
             grad_heads_fused = grad.mean(dim=1)
+            
             R_layer = attn_heads_fused * grad_heads_fused
-            R_layer = torch.clamp(R_layer, min=0) 
+            R_layer = torch.clamp(R_layer, min=0)
+            
             R_layer_with_residual = R_layer + torch.eye(num_tokens, device=self.device).unsqueeze(0)
             R_layer_normalized = R_layer_with_residual / (R_layer_with_residual.sum(dim=-1, keepdim=True) + 1e-6)
+            
+            # The update rule remains the same, but because the order of R_layer matrices
+            # is now reversed, the total relevance is accumulated from back to front.
+            # Calculation becomes: I @ R_last @ R_{L-1} @ ... @ R_0
             relevance = torch.matmul(relevance, R_layer_normalized)
+            
         return relevance[0, 0, 1:]
 
 class RolloutInterpreter(Interpreter):
