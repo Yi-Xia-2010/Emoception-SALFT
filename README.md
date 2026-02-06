@@ -3,9 +3,7 @@ This is the repository containing the source code and supplement files for the p
 
 Please note:    
     1. Some deafult relative path parameters are hardcoded within the script (commented in scripts) , please adjust it yourself if needed.   
-    2. Python version = 3.11.7  
-    3. A GPU with more than 32GB of memory may be necessary.  
-    4. You'll find the minimum required environment details in either the `requirements.txt` or `minimal_environment.yaml` file.
+    2. Python version = 3.11    
 
 
 ## Dataset
