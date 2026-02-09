@@ -43,10 +43,10 @@ echo "Searching for generated schedule file..."
 SCHEDULE_FILE=$(find ${DIR_ANALYSIS} -name "finetuning_schedule.json" | grep "${GAME_NAME}" | grep "metric_l2" | head -n 1)
 
 if [ -z "$SCHEDULE_FILE" ]; then
-    echo "❌ Error: Schedule file not found! Analysis might have failed."
+    echo " Error: Schedule file not found! Analysis might have failed."
     exit 1
 else
-    echo "✅ Schedule File Found: ${SCHEDULE_FILE}"
+    echo " Schedule File Found: ${SCHEDULE_FILE}"
 fi
 
 
