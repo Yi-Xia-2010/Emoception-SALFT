@@ -467,7 +467,7 @@ def main():
     parser.add_argument('--model_path', type=str, default='Results/new5/ours/solid/fold_1/checkpoint_best',
                        help='Path to model checkpoint')
     parser.add_argument('--base_path', type=str, default='../Dataset/', help='Dataset base path')
-    parser.add_argument('--output_dir', type=str, default='perturbation_results',
+    parser.add_argument('--output_dir', type=str, default='perturbation_results/solid',
                        help='Output directory')
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--fold', type=int, default=0, help='Fold index (0-4)')
