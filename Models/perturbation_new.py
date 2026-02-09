@@ -30,7 +30,6 @@ from PIL import Image
 from transformers import VivitImageProcessor, VivitForVideoClassification
 from tqdm import tqdm
 
-# ================= Configuration =================
 
 def set_seed(seed: int):
     """Set random seeds for reproducibility"""
@@ -54,7 +53,6 @@ def get_player_id_simple(file_path: str, game_name: str) -> str:
     except: 
         return "unknown"
 
-# ================= Memory Management =================
 
 class MemoryManager:
     """Memory manager - periodically cleans GPU cache"""
@@ -82,7 +80,6 @@ class MemoryManager:
             return f"Allocated: {allocated:.2f}GB, Reserved: {reserved:.2f}GB"
         return "CPU mode"
 
-# ================= Dataset =================
 
 class MyCSVDataset:
     """Dataset with caching support"""
@@ -150,7 +147,6 @@ class MyCSVDataset:
             'clip_path': clip_path
         }
 
-# ================= Model Loading =================
 
 def load_model(model_path: str, device: torch.device):
     """Load model with eager attention for hook compatibility"""
@@ -192,7 +188,6 @@ def load_model(model_path: str, device: torch.device):
     
     return model, id2label, label2id
 
-# ================= Interpreters (Memory Optimized) =================
 
 class Interpreter:
     """Base interpreter class"""
@@ -401,7 +396,6 @@ class GradSAMInterpreter(Interpreter):
         
         return result
 
-# ================= Perturbation Test (Memory Optimized) =================
 
 def run_perturbation_test(model, interpreter, inputs: torch.Tensor, 
                          target_class: int, mode: str, steps: int) -> Tuple[np.ndarray, np.ndarray]:
@@ -466,12 +460,11 @@ def run_perturbation_test(model, interpreter, inputs: torch.Tensor,
     
     return perturbation_levels, np.array(confidence_scores)
 
-# ================= Main Function =================
 
 def main():
     parser = argparse.ArgumentParser(description="Complete Interpretability Evaluation (Memory Optimized)")
     parser.add_argument('--game_name', type=str, default='solid', help='Game name')
-    parser.add_argument('--model_path', type=str, default='Results/new/ours/solid/fold_1/checkpoint_best',
+    parser.add_argument('--model_path', type=str, default='Results/new5/ours/solid/fold_1/checkpoint_best',
                        help='Path to model checkpoint')
     parser.add_argument('--base_path', type=str, default='../Dataset/', help='Dataset base path')
     parser.add_argument('--output_dir', type=str, default='perturbation_results',
@@ -535,8 +528,8 @@ def main():
     
     num_samples = len(dataset) if args.max_samples == -1 else min(args.max_samples, len(dataset))
     
-    print(f"✓ Test set size: {len(test_df)}")
-    print(f"✓ Will test {num_samples} samples")
+    print(f" Test set size: {len(test_df)}")
+    print(f" Will test {num_samples} samples")
     print(f"  Label distribution: {test_df['arousal_change'].value_counts().to_dict()}")
 
     # Initialize interpreters
@@ -547,7 +540,7 @@ def main():
         "Grad-SAM": GradSAMInterpreter,
         "Our Method": OurMethodInterpreter
     }
-    print(f"✓ {len(interpreters)} interpreters ready")
+    print(f" {len(interpreters)} interpreters ready")
 
     # Initialize result storage
     results = {
@@ -631,7 +624,7 @@ def main():
             error_count += 1
             print(f"\n Error at sample {i}: {type(e).__name__}: {str(e)}")
             if error_count > 10:
-                print("\n  Too many errors, stopping...")
+                print("\n Too many errors, stopping...")
                 break
             
             # Force cleanup after error
@@ -686,7 +679,7 @@ def main():
     with open(final_json, 'w') as f:
         json.dump(summary, f, indent=2)
     
-    print(f"\n Final results saved to {final_json}")
+    print(f"\n✓ Final results saved to {final_json}")
     
     # Plot summary comparison
     plot_summary_comparison(summary, args.output_dir, args.fold)
@@ -695,7 +688,6 @@ def main():
     print("Evaluation Complete!")
     print(f"{'='*80}")
 
-# ================= Visualization =================
 
 def plot_summary_comparison(summary, output_dir, fold):
     """Plot comparison of all results"""
@@ -725,7 +717,7 @@ def plot_summary_comparison(summary, output_dir, fold):
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, f'summary_fold{fold}.png'), dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"Summary plot saved")
+    print(f"✓ Summary plot saved")
 
 if __name__ == '__main__':
     main()
