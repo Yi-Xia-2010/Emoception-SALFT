@@ -39,15 +39,14 @@ Please note: The code used for layer selection in the exploratory stage is curre
 
 --efficiency_analysis.py is the script for compare overall computational efficiency between SALFT and Full fine-tuning for ViViT.
 
---Folder 'Results' contains all results.
+--cross_val.py is the script that conducts the preliminary cross-val protocol. The results are stored in the folder 'preliminary_cross_val_results'.
 
---'cross_val.py' is the script that conducts the preliminary cross-val protocol. The results are stored in the folder 'preliminary_cross_val_results'.
+--interpreter_new.py is the script to generate the interpreation.
 
---'interpreter_new.py' is the script to generate the interpreation.
-
---The script 'perturbation_new.py' is to conduct the perturbation test on our interpretability method and selected baselines. The resutls are in folder 'Results/perturbation_evaluation_results'.
+--The script perturbation_new.py is to conduct the perturbation test on our interpretability method and selected baselines. The resutls are in folder 'Results/perturbation_evaluation_results'.
 
 ### interpretation_samples 
 This folder contains the interpretation examples. 
 
 ### Results
+This folder contain all resutls.
