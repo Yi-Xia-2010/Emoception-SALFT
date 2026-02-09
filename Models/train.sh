@@ -13,9 +13,9 @@ NUM_EPOCHS=14
 BATCH_SIZE=4
 LEARNING_RATE=5e-5
 
-DIR_STEP1="Results/new/full_test"
-DIR_ANALYSIS="Results/new/exploration_test" 
-DIR_STEP2="Results/new/ours_test"
+DIR_STEP1="Results/new/full"
+DIR_ANALYSIS="Results/new/exploration" 
+DIR_STEP2="Results/new/ours"
 
 TRAIN_SCRIPT="finetune_vivit.py"
 EXPLORE_SCRIPT="exploration.py"
