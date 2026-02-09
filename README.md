@@ -50,3 +50,5 @@ This folder contains the interpretation examples.
 
 ### Results
 This folder contain all resutls.
+
+Due to the large file size, only best checkpoints in each fold each game each method are stored in an OSF repository. The corresponding link is provided here: [link].
