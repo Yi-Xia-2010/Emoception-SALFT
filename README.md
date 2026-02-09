@@ -33,7 +33,11 @@ Please note: The code used for layer selection in the exploratory stage is curre
 
 --resnet_lstm.py, handling the fine-tuning (full or layer-selective) of the ResNet backbone in a ResNet+LSTM model.
 
+--t-test.py, used for conducting statistical paired $t$-tests to compare F1 performance between SALFT and full fine-tuning, as well as between SALFT and the best-performing baseline on each game set.
+
 --compute_flops.py is the script that measures the FLOPs per iteration of a given model and compares the efficiency per interation of different methods. The results is saved in 'finetuning_efficiency_comparison.csv'.
+
+--efficiency_analysis.py is the script for compare overall computational efficiency between SALFT and Full fine-tuning for ViViT.
 
 --Folder 'Results' contains all results.
 
