@@ -8,7 +8,7 @@ import sys
 from typing import List, Tuple, Dict, Optional
 
 import matplotlib
-matplotlib.use('Agg') # 强制非交互后端，适配服务器环境
+matplotlib.use('Agg') 
 
 import torch
 import torch.nn as nn
@@ -25,7 +25,6 @@ from transformers import VivitImageProcessor, VivitForVideoClassification
 from tqdm import tqdm
 from sklearn.model_selection import StratifiedGroupKFold
 
-# ================= 🛠️ 基础工具函数 =================
 
 def set_seed(seed: int):
     torch.manual_seed(seed)
@@ -45,7 +44,6 @@ def get_player_id_simple(file_path: str, game_name: str) -> str:
         return "unknown"
     except: return "unknown"
 
-# ================= 📂 数据集类 =================
 
 class MyCSVDataset(Dataset):
     def __init__(self, data_df: pd.DataFrame, base_path: str, game_name: str, label2id: Dict[str, int]):
@@ -91,7 +89,6 @@ def prepare_input(sample_data: Dict, device: torch.device) -> Dict[str, torch.Te
     pixel_values = sample_data['pixel_values'].unsqueeze(0)
     return {"pixel_values": pixel_values.to(device)}
 
-# ================= 🧠 模型与解释逻辑 (LRP) =================
 
 def load_model(model_path: str, model_ckpt_hub: str, id2label: Dict, label2id: Dict, device: torch.device) -> VivitForVideoClassification:
     print(f"Loading model from: {model_path}")
@@ -140,10 +137,9 @@ def generate_relevance(model, inputs, target_id):
     for h in hooks: h.remove()
     return calculate_new_relevance(attns, grads, model.device)
 
-# ================= 🎨 可视化绘图逻辑 =================
 
 def process_frames_and_maps(cls_relevance, original_frames_tensor):
-    """预处理：生成所有32帧的 Heatmap 和 Overlay"""
+
     num_frames, _, height, width = original_frames_tensor.shape
     num_temporal = num_frames // 2
     grid_size = int(np.sqrt(cls_relevance.shape[-1] // num_temporal))
@@ -174,7 +170,7 @@ def process_frames_and_maps(cls_relevance, original_frames_tensor):
     return processed_data
 
 def save_full_visualization(processed_data, save_path, class_name, game_name, sample_index):
-    """完整版 (32帧, 3视图)"""
+
     rows, cols = 6, 16
     fig, axs = plt.subplots(rows, cols, figsize=(cols * 1.5, rows * 1.6))
     
@@ -202,7 +198,7 @@ def save_full_visualization(processed_data, save_path, class_name, game_name, sa
     print(f"  [Saved] Full Vis: {save_path}")
 
 def save_simplified_visualization(processed_data, save_path, class_name, game_name, sample_index):
-    """精简版 (16帧, 2视图, 无Heatmap)"""
+
     sampled_indices = list(range(0, 32, 2))
     rows, cols = 4, 8
     fig, axs = plt.subplots(rows, cols, figsize=(cols * 2.0, rows * 2.0))
@@ -227,7 +223,6 @@ def save_simplified_visualization(processed_data, save_path, class_name, game_na
     plt.close(fig)
     print(f"  [Saved] Simple Vis: {save_path}")
 
-# ================= 🚀 主程序 =================
 
 def main():
     parser = argparse.ArgumentParser()
@@ -236,27 +231,24 @@ def main():
     parser.add_argument('--dataset_dir', type=str, default='../Dataset/')
     parser.add_argument('--output_dir', type=str, default='interpretation_results/v3_dual_mode/full')
     parser.add_argument('--seed', type=int, default=42)
-    # [新增参数] 指定样本 Index
     parser.add_argument('--sample_idx', type=int, default=-1, help='Specific sample index to visualize. Default -1 means auto-search.')
     args = parser.parse_args()
 
     if not os.path.exists(args.model_path):
-        print(f"❌ Error: Model path not found: {args.model_path}"); return
+        print(f" Error: Model path not found: {args.model_path}"); return
 
     set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    # 1. 准备数据
     class_labels = ['down', 'same', 'up']
     label2id = {l: i for i, l in enumerate(class_labels)}
     id2label = {i: l for l, i in label2id.items()}
 
     csv_file = os.path.join(args.dataset_dir, f'new_{args.game_name}.csv')
-    if not os.path.exists(csv_file): print(f"❌ Error: CSV not found {csv_file}"); return
+    if not os.path.exists(csv_file): print(f" Error: CSV not found {csv_file}"); return
     
     all_data_df = pd.read_csv(csv_file)
 
-    # 2. 复刻预处理 (Lag & Split)
     if 'start_time' not in all_data_df.columns:
         def extract_frame_num(path):
             try: return int(os.path.splitext(os.path.basename(path))[0])
@@ -283,26 +275,24 @@ def main():
     dataset = MyCSVDataset(test_df, args.dataset_dir, args.game_name, label2id)
     print(f"Test Set Size: {len(dataset)}")
 
-    # 3. 加载模型
     model_ckpt_hub = "google/vivit-b-16x2-kinetics400"
     model = load_model(args.model_path, model_ckpt_hub, id2label, label2id, device)
 
     game_out_dir = os.path.join(args.output_dir, args.game_name)
     os.makedirs(game_out_dir, exist_ok=True)
 
-    # ================= 4. 处理逻辑 (分支) =================
     
-    # 模式 A: 指定样本 Index
+    # Mode A: Specified Index
     if args.sample_idx >= 0:
         idx = args.sample_idx
         if idx >= len(dataset):
-            print(f"❌ Error: Index {idx} out of range (0 ~ {len(dataset)-1})"); return
+            print(f" Error: Index {idx} out of range (0 ~ {len(dataset)-1})"); return
             
         print(f"\n--- Processing Single Sample Mode (Index: {idx}) ---")
         try: 
             sample = dataset[idx]
         except Exception as e:
-            print(f"❌ Error loading sample {idx}: {e}"); return
+            print(f" Error loading sample {idx}: {e}"); return
 
         gt_id = sample['label'].item()
         gt_name = id2label[gt_id]
@@ -313,23 +303,20 @@ def main():
             pred_id = logits.argmax(-1).item()
             pred_name = id2label[pred_id]
             
-        # 打印预测结果
-        status = "✅ Correct" if pred_id == gt_id else "❌ Wrong"
+        status = " Correct" if pred_id == gt_id else "Wrong"
         print(f"Sample {idx}: GT='{gt_name}', Pred='{pred_name}' -> {status}")
         
-        # 无论对错，都针对【真实标签】生成解释 (看看模型有没有关注到真实类别该关注的地方)
         print(f"Generating interpretation for class: '{gt_name}'...")
         relevance = generate_relevance(model, inputs, gt_id)
         processed_data = process_frames_and_maps(relevance, inputs['pixel_values'][0])
         
-        # 保存文件名带上 "_specific" 标记
         full_name = os.path.join(game_out_dir, f"full_{gt_name}_{idx}_specific.png")
         simple_name = os.path.join(game_out_dir, f"simple_{gt_name}_{idx}_specific.png")
         
         save_full_visualization(processed_data, full_name, gt_name, args.game_name, idx)
         save_simplified_visualization(processed_data, simple_name, gt_name, args.game_name, idx)
 
-    # 模式 B: 自动搜索 (默认)
+    # Mode B: Auto (default)
     else:
         print("\n--- Auto-Search Mode (Find 1 correct sample per class) ---")
         found_classes = set()
@@ -349,7 +336,7 @@ def main():
                 pred_id = model(**inputs).logits.argmax(-1).item()
 
             if pred_id == gt_id:
-                print(f"\n✅ Found correct '{gt_name}' at idx {idx}")
+                print(f"\n Found correct '{gt_name}' at idx {idx}")
                 found_classes.add(gt_name)
                 
                 relevance = generate_relevance(model, inputs, gt_id)
