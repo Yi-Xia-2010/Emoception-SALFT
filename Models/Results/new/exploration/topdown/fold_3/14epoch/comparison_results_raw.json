@@ -1,0 +1,80 @@
+{
+  "embeddings": {
+    "param_l1_diff": 27642.71875,
+    "param_l2_diff": 19.311586380004883,
+    "param_avg_l2_diff": 0.010189518357244064,
+    "param_cosine_similarity": 0.9964338541030884
+  },
+  "vivit.encoder.layer.0": {
+    "param_l1_diff": 51454.65234375,
+    "param_l2_diff": 24.57379150390625,
+    "param_avg_l2_diff": 0.009230266411659787,
+    "param_cosine_similarity": 0.9929781556129456
+  },
+  "vivit.encoder.layer.1": {
+    "param_l1_diff": 51433.078125,
+    "param_l2_diff": 24.42428970336914,
+    "param_avg_l2_diff": 0.009174111404087554,
+    "param_cosine_similarity": 0.992124080657959
+  },
+  "vivit.encoder.layer.2": {
+    "param_l1_diff": 51381.0390625,
+    "param_l2_diff": 24.371849060058594,
+    "param_avg_l2_diff": 0.009154413950868818,
+    "param_cosine_similarity": 0.9918956756591797
+  },
+  "vivit.encoder.layer.3": {
+    "param_l1_diff": 50998.046875,
+    "param_l2_diff": 24.197467803955078,
+    "param_avg_l2_diff": 0.009088913865105517,
+    "param_cosine_similarity": 0.9921749234199524
+  },
+  "vivit.encoder.layer.4": {
+    "param_l1_diff": 50618.359375,
+    "param_l2_diff": 24.072858810424805,
+    "param_avg_l2_diff": 0.009042108950715713,
+    "param_cosine_similarity": 0.9926759004592896
+  },
+  "vivit.encoder.layer.5": {
+    "param_l1_diff": 49938.53125,
+    "param_l2_diff": 23.810396194458008,
+    "param_avg_l2_diff": 0.008943524250504124,
+    "param_cosine_similarity": 0.9932827949523926
+  },
+  "vivit.encoder.layer.6": {
+    "param_l1_diff": 49145.953125,
+    "param_l2_diff": 23.67474365234375,
+    "param_avg_l2_diff": 0.008892571221829878,
+    "param_cosine_similarity": 0.9937043190002441
+  },
+  "vivit.encoder.layer.7": {
+    "param_l1_diff": 48448.9296875,
+    "param_l2_diff": 23.071346282958984,
+    "param_avg_l2_diff": 0.008665926567885014,
+    "param_cosine_similarity": 0.9943056106567383
+  },
+  "vivit.encoder.layer.8": {
+    "param_l1_diff": 46817.921875,
+    "param_l2_diff": 22.463212966918945,
+    "param_avg_l2_diff": 0.008437503024861001,
+    "param_cosine_similarity": 0.9950454235076904
+  },
+  "vivit.encoder.layer.9": {
+    "param_l1_diff": 40685.12109375,
+    "param_l2_diff": 19.870607376098633,
+    "param_avg_l2_diff": 0.007463683404887985,
+    "param_cosine_similarity": 0.9966476559638977
+  },
+  "vivit.encoder.layer.10": {
+    "param_l1_diff": 30007.248046875,
+    "param_l2_diff": 16.35873794555664,
+    "param_avg_l2_diff": 0.0061445751817343144,
+    "param_cosine_similarity": 0.9983657002449036
+  },
+  "vivit.encoder.layer.11": {
+    "param_l1_diff": 23122.86328125,
+    "param_l2_diff": 13.546558380126953,
+    "param_avg_l2_diff": 0.005088280446661971,
+    "param_cosine_similarity": 0.9987809658050537
+  }
+}

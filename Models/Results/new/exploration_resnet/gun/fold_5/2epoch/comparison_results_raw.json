@@ -1,0 +1,32 @@
+{
+  "stem": {
+    "param_l1_diff": 1851.7589111328125,
+    "param_l2_diff": 53.64101791381836,
+    "param_avg_l2_diff": 0.5493054265516709,
+    "param_cosine_similarity": 0.3581780195236206
+  },
+  "layer1": {
+    "param_l1_diff": 23472.05078125,
+    "param_l2_diff": 117.27561950683594,
+    "param_avg_l2_diff": 0.2524491808392315,
+    "param_cosine_similarity": 0.42169708013534546
+  },
+  "layer2": {
+    "param_l1_diff": 83248.28125,
+    "param_l2_diff": 138.42025756835938,
+    "param_avg_l2_diff": 0.12534118433001668,
+    "param_cosine_similarity": 0.3658977150917053
+  },
+  "layer3": {
+    "param_l1_diff": 329242.03125,
+    "param_l2_diff": 215.99351501464844,
+    "param_avg_l2_diff": 0.0810702396366409,
+    "param_cosine_similarity": 0.3511211574077606
+  },
+  "layer4": {
+    "param_l1_diff": 529894.375,
+    "param_l2_diff": 378.0235290527344,
+    "param_avg_l2_diff": 0.0977201899161628,
+    "param_cosine_similarity": 0.3689708411693573
+  }
+}
