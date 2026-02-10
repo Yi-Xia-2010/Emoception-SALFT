@@ -52,15 +52,11 @@ This folder contains all resutls.
 The new folder contains all detailed results from the fine-tuning and exploratory stages.
 Within it, method-specific folders are organized as follows:
 
-exploration & exploration_resnet: Layer selection process and results for ViViT and ResNet, respectively.
-
-full: Results of full fine-tuning on ViViT.
-
-vivit_salft: Results of our SALFT method on ViViT.
-
-resnet_full: Results of full fine-tuning on ResNet50 + LSTM.
-
-resnet_salft: Results of our SALFT method on ResNet50 + LSTM.
+exploration & exploration_resnet: Layer selection process and results for ViViT and ResNet, respectively.  
+full: Results of full fine-tuning on ViViT.  
+vivit_salft: Results of our SALFT method on ViViT.  
+resnet_full: Results of full fine-tuning on ResNet50 + LSTM.  
+resnet_salft: Results of our SALFT method on ResNet50 + LSTM.  
 
 vivit_lora: Results of fine-tuning ViViT with LoRA.
 
