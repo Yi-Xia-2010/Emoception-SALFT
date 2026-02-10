@@ -39,8 +39,6 @@ Please note: The code used for layer selection in the exploratory stage is curre
 
 --efficiency_analysis.py is the script for compare overall computational efficiency between SALFT and Full fine-tuning for ViViT.
 
---cross_val.py is the script that conducts the preliminary cross-val protocol. The results are stored in the folder 'preliminary_cross_val_results'.
-
 --interpreter_new.py is the script to generate the interpreation.
 
 --The script perturbation_new.py is to conduct the perturbation test on our interpretability method and selected baselines. The resutls are in folder 'Results/perturbation_evaluation_results'.
@@ -49,6 +47,27 @@ Please note: The code used for layer selection in the exploratory stage is curre
 This folder contains the interpretation examples. 
 
 ### Results
-This folder contain all resutls.
+This folder contains all resutls.
 
+The new folder contains all detailed results from the fine-tuning and exploratory stages.
+Within it, method-specific folders are organized as follows:
+exploration & exploration_resnet: Layer selection process and results for ViViT and ResNet, respectively.
+full: Results of full fine-tuning on ViViT.
+vivit_salft: Results of our SALFT method on ViViT.
+resnet_full: Results of full fine-tuning on ResNet50 + LSTM.
+resnet_salft: Results of our SALFT method on ResNet50 + LSTM.
+vivit_lora: Results of fine-tuning ViViT with LoRA.
+
+Note: For each method (e.g., vivit_salft), there are subfolders for each game (e.g., apex). Within these game folders, you will find the distribution of intra-user label entropy (e.g., user_label_entropy_distribution.png) and t-SNE visualizations (e.g., tsne_fold_1.png).
+
+'efficiency' folder contains the computational efficiecy analysis resutls.
+
+'overall_result' folder contains the aggregate results and the statistical paired $t$-test resutls
+
+'perturbation_evalutaion_results' folder contains the results of perturbation test for our interpretability method and selected baselines.
+
+'preliminary_cross_val_results' folder contains the results of preliminary cross-val protocol evaluation.
+--cross_val.py is the script that conducts the preliminary cross-val protocol. The results are stored in the folder 'logs'.
+
+For checkpoints:
 Due to the large file size, only best checkpoints in each fold each game each method are stored in an OSF repository. The corresponding link is provided here: [link].
