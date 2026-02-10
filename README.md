@@ -51,14 +51,20 @@ This folder contains all resutls.
 
 The new folder contains all detailed results from the fine-tuning and exploratory stages.
 Within it, method-specific folders are organized as follows:
+
 exploration & exploration_resnet: Layer selection process and results for ViViT and ResNet, respectively.
+
 full: Results of full fine-tuning on ViViT.
+
 vivit_salft: Results of our SALFT method on ViViT.
+
 resnet_full: Results of full fine-tuning on ResNet50 + LSTM.
+
 resnet_salft: Results of our SALFT method on ResNet50 + LSTM.
+
 vivit_lora: Results of fine-tuning ViViT with LoRA.
 
-Note: For each method (e.g., vivit_salft), there are subfolders for each game (e.g., apex). Within these game folders, you will find the distribution of intra-user label entropy (e.g., user_label_entropy_distribution.png) and t-SNE visualizations (e.g., tsne_fold_1.png).
+Note: For each method (e.g., vivit_salft), there are subfolders for each game (e.g., apex). Within these game folders, you will find the distribution of intra-user label entropy (e.g., user_label_entropy_distribution.png) and t-SNE visualizations for feature embedings(e.g., tsne_fold_1.png).
 
 'efficiency' folder contains the computational efficiecy analysis resutls.
 
