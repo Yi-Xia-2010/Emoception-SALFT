@@ -1,6 +1,0 @@
-{
-  "epoch_pair": "e1_vs_e2",
-  "spearman_rho": 1.0,
-  "p_value": 0.0,
-  "metric": "param_avg_l2_diff"
-}
