@@ -71,4 +71,4 @@ Note: For each method (e.g., vivit_salft), there are subfolders for each game (e
 --cross_val.py is the script that conducts the preliminary cross-val protocol. The results are stored in the folder 'logs'.
 
 For checkpoints:
-Due to the large file size, only best checkpoints in each fold each game each method are stored in an OSF repository. The corresponding link is provided here: [https://tinyurl.com/2dkfw6sj].
+Due to the large file size, only best checkpoints in each fold each game each method are stored in an OSF repository. The corresponding link is provided here: [https://zenodo.org/records/18589511?preview=1&token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImExNTMzODNkLTZiNGYtNDEzNy04MjdiLTlmNzNkODNkYjAzOSIsImRhdGEiOnt9LCJyYW5kb20iOiJiM2ZmYmZiZjgyZWFlOGNjZDllNDUzMTFlZjA4NDY2ZiJ9.6n0OSJEyjyPiNmZvStXlNl3VsgPzSJBgdNO2aOh85rviWm6kmKvwHUSoOO1G3a0L1DupXVNJawqO9zlYftF2SQ].
