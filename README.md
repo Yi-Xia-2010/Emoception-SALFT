@@ -63,7 +63,7 @@ Note: For each method (e.g., vivit_salft), there are subfolders for each game (e
 
 'efficiency' folder contains the computational efficiecy analysis resutls.
 
-'overall_result' folder contains the aggregate results and the statistical paired $t$-test resutls
+'overall_result' folder contains the aggregate results and the exact two-sided Wilcoxon signed-rank test resutls
 
 'perturbation_evalutaion_results' folder contains the results of perturbation test for our interpretability method and selected baselines.
 

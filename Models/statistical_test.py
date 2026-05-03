@@ -3,6 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 from scipy import stats
+import warnings
 
 # ================= Configuration Area =================
 
@@ -13,7 +14,7 @@ GAMES = ["apex", "endless", "fps", "gallery", "solid", "gun", "platform", "tiny"
 # Logic: {ROOT}/{METHOD}/{GAME}/{FILENAME}
 # Please ensure the folder names (case-sensitive) match the directory 
 DATA_ROOT = "Results/new"
-OURS_DIR  = "ours"
+OURS_DIR  = "vivit_salft"
 FULL_DIR  = "full"
 DEFAULT_FILENAME = "aggregated_cv_results.json"
 
@@ -31,7 +32,7 @@ BASELINE_MAP = {
 }
 
 # 4. Metrics to evaluate
-METRICS = ["f1_weighted", "f1_macro"]
+METRICS = ["f1_weighted", "f1_macro", "accuracy"]
 
 # ===================================================================
 
@@ -79,7 +80,7 @@ def load_scores(file_path, method_label, metric_name):
         # Only applicable to: RF Baseline (summary.json)
         elif "fold_details" in data:
             mapping = {
-                "accuracy": "accuracies",
+                "accuracy": "accuracy",
                 "f1_weighted": "weighted_f1s",
                 "f1_macro": "macro_f1s"
             }
@@ -103,12 +104,30 @@ def get_sig_stars(p_value):
     if p_value < 0.05:  return "*"
     return "ns"
 
+
 def analyze_pair(scores_a, scores_b):
-    if len(scores_a) != len(scores_b): return np.nan, np.nan, "LenErr"
+    if len(scores_a) != len(scores_b): 
+        return np.nan, np.nan, "LenErr"
+    
     diffs = scores_a - scores_b
     mean_diff = np.mean(diffs)
-    # Paired t-test
-    _, p_val = stats.ttest_rel(scores_a, scores_b)
+    
+    if np.all(diffs == 0):
+        return mean_diff, 1.0, "ns"
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        try:
+            _, p_val = stats.wilcoxon(
+                scores_a, 
+                scores_b, 
+                alternative='two-sided', 
+                method='exact',          
+                zero_method='pratt'
+            )
+        except ValueError as e:
+            print(f" [Warning] Wilcoxon failed: {e}")
+            return mean_diff, 1.0, "ns"
+            
     return mean_diff, p_val, get_sig_stars(p_val)
 
 def main():
