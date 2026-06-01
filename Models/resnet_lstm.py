@@ -109,14 +109,14 @@ def preprocess_dataset(df, root_dir, cache_dir, game_name):
                     frames.append(tensor_img)
             except Exception as e:
                 if error_count == 0:
-                    print(f"⚠️ Error reading image: {frame_path} -> {e}")
+                    print(f" Error reading image: {frame_path} -> {e}")
                 error_count += 1
                 frames.append(torch.zeros((3, 256, 256), dtype=torch.float32))
         
         torch.save(torch.stack(frames), save_path)
         
     if error_count > 0:
-        print(f"\n⚠️ WARNING: {error_count} frames failed to load (replaced with black images).")
+        print(f"\n WARNING: {error_count} frames failed to load (replaced with black images).")
         print("Please check your '../Dataset/' path and image filenames.\n")
     else:
         print("[Pre-packing] Done successfully!\n")
@@ -226,9 +226,6 @@ class ResNetDataset(Dataset):
         return {"pixel_values": pixel_values, "label": torch.LongTensor([label_id])}
 
 def evaluate(model, dataloader, device, case_name, epoch, label2id, id2label, criterion=None, use_amp=False):
-    """
-    [FIXED] 评估时统一使用FP32，不使用AMP
-    """
     model.eval()
     all_labels = []
     all_preds = []
@@ -315,16 +312,16 @@ def main(args):
 
     if args.load_from:
         source_dir = os.path.join(args.load_from, args.game_name)
-        print(f"📂 Loading skipped folds from: {source_dir}")
+        print(f" Loading skipped folds from: {source_dir}")
     else:
         source_dir = base_output_dir 
 
-    print(f"📂 Saving new results to: {base_output_dir}")
+    print(f" Saving new results to: {base_output_dir}")
 
     # 1. Load Data
     csv_file = f'../Dataset/new_{args.game_name}.csv'
     if not os.path.exists(csv_file):
-        print(f"❌ Error: CSV file not found: {csv_file}")
+        print(f" Error: CSV file not found: {csv_file}")
         return
     all_data_df = pd.read_csv(csv_file)
     
@@ -379,13 +376,12 @@ def main(args):
 
         print(f"\n" + "="*40 + f"\nFOLD {fold_num}/5 (ResNet+LSTM)\n" + "="*40)
         
-        # [FIXED] 明确训练策略 - 移除BN冻结逻辑
         use_amp = not is_target_fold  # 非目标fold使用BF16，目标fold使用FP32
         
         if is_target_fold:
-            print(f"⚠️ APPLYING FIXES FOR FOLD {fold_num}: AMP Disabled (using FP32)")
+            print(f" APPLYING FIXES FOR FOLD {fold_num}: AMP Disabled (using FP32)")
         else:
-            print(f"ℹ️ Using BF16 AMP for FOLD {fold_num}")
+            print(f" Using BF16 AMP for FOLD {fold_num}")
 
         fold_dir = os.path.join(base_output_dir, f"fold_{fold_num}")
         model_dir = os.path.join(fold_dir, "checkpoints")
